@@ -434,7 +434,7 @@
               >
                 <div class="social-icons d-flex flex-wrap gap-3">
                   <a
-                    href="#"
+                    href="https://github.com/reachBorinhun"
                     class="social-link"
                     aria-label="GitHub"
                     title="GitHub"
@@ -453,7 +453,7 @@
                     ></i>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.tiktok.com/@binnnnn1110?_r=1&_t=ZS-91V84u2WqsC"
                     class="social-link"
                     aria-label="TikTok"
                     title="TikTok"
@@ -461,7 +461,7 @@
                     <i class="fab fa-tiktok fa-lg" aria-hidden="true"></i>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.facebook.com/share/1A9qHEJCJL/?mibextid=wwXIfr"
                     class="social-link"
                     aria-label="Facebook"
                     title="Facebook"
@@ -469,7 +469,7 @@
                     <i class="fab fa-facebook-f fa-lg" aria-hidden="true"></i>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/in/reach-borin-hun/"
                     class="social-link"
                     aria-label="LinkedIn"
                     title="LinkedIn"
@@ -1674,7 +1674,7 @@
                     id="contact-email"
                     readonly
                     class="contact-input form-control form-control-lg text-center"
-                    value="your.email@example.com"
+                    value="reachborinhun369@gmail.com"
                     aria-label="Email address to copy"
                   />
                   <button
@@ -1692,7 +1692,7 @@
                   class="contact-social d-flex justify-content-center gap-3 mt-3"
                 >
                   <a
-                    href=""
+                    href="https://github.com/reachBorinhun"
                     class="social-link"
                     aria-label="GitHub"
                     title="GitHub"
@@ -1700,7 +1700,7 @@
                     <i class="fab fa-github" aria-hidden="true"></i>
                   </a>
                   <a
-                    href=""
+                    href="https://www.linkedin.com/in/reach-borin-hun/"
                     class="social-link"
                     aria-label="LinkedIn"
                     title="LinkedIn"
@@ -1732,6 +1732,14 @@
       >
         Email copied to clipboard
       </div>
+
+      <!-- Telegram lightbox (hidden by default) -->
+      <div id="tele-lightbox" class="tele-lightbox" aria-hidden="true">
+        <div class="tele-backdrop" data-role="backdrop"></div>
+        <div class="tele-wrapper">
+          <img src="./assets/img/tele.png" alt="Telegram" class="tele-image" />
+        </div>
+      </div>
     </main>
 
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
@@ -1755,11 +1763,23 @@
         var toast = document.getElementById("contact-toast");
         if (!copyBtn || !emailInput || !toast) return;
 
-        function showToast(msg) {
-          toast.textContent = msg || "Email copied to clipboard";
+        function showToast(msg, type) {
+          var message = msg || "Email copied to clipboard";
+          // remove previous type classes
+          toast.classList.remove("error");
+          if (type === "error") toast.classList.add("error");
+          // set inner content: icon + message
+          var iconHtml =
+            type === "error"
+              ? '<span class="toast-icon"><i class="fas fa-circle-exclamation" aria-hidden="true"></i></span>'
+              : '<span class="toast-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>';
+          toast.innerHTML =
+            iconHtml + '<span class="toast-text">' + message + "</span>";
           toast.classList.add("show");
           setTimeout(function () {
             toast.classList.remove("show");
+            // clear error class after hide so next toast can default to success
+            toast.classList.remove("error");
           }, 2400);
         }
 
@@ -1770,9 +1790,9 @@
             emailInput.select && emailInput.select();
             try {
               document.execCommand("copy");
-              showToast("Email copied to clipboard");
+              showToast("Email copied to clipboard", "success");
             } catch (e) {
-              showToast("Copy failed — manually select and copy");
+              showToast("Copy failed — manually select and copy", "error");
             }
             return;
           }
@@ -1780,10 +1800,10 @@
           navigator.clipboard
             .writeText(value)
             .then(function () {
-              showToast("Email copied to clipboard");
+              showToast("Email copied to clipboard", "success");
             })
             .catch(function () {
-              showToast("Copy failed — manually select and copy");
+              showToast("Copy failed — manually select and copy", "error");
             });
         });
 
@@ -1836,6 +1856,84 @@
           el.addEventListener("click", function () {
             if (shouldHide()) bsCollapse.hide();
           });
+        });
+
+        // Also close the mobile menu when the user clicks or touches outside the navbar
+        function outsideClickHandler(e) {
+          try {
+            // only act on small / collapsed view (when toggler is visible)
+            if (!shouldHide()) return;
+            // if the collapse is not shown, nothing to do
+            if (!collapseEl.classList.contains("show")) return;
+            var toggler = document.querySelector(".navbar-toggler");
+            // ignore clicks on the collapse itself or the toggler
+            if (
+              collapseEl.contains(e.target) ||
+              (toggler && toggler.contains(e.target))
+            )
+              return;
+            bsCollapse.hide();
+          } catch (err) {
+            // swallow errors in older browsers
+          }
+        }
+
+        document.addEventListener("click", outsideClickHandler, {
+          passive: true,
+        });
+        document.addEventListener("touchstart", outsideClickHandler, {
+          passive: true,
+        });
+      })();
+    </script>
+    <script>
+      // Telegram lightbox: show ./assets/img/tele.png when Telegram social link is clicked
+      (function () {
+        var lightbox = document.getElementById("tele-lightbox");
+        if (!lightbox) return;
+        var backdrop = lightbox.querySelector(".tele-backdrop");
+
+        function openLightbox() {
+          lightbox.classList.add("show");
+          lightbox.setAttribute("aria-hidden", "false");
+          // prevent background scroll while open
+          document.documentElement.style.overflow = "hidden";
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove("show");
+          lightbox.setAttribute("aria-hidden", "true");
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
+        }
+
+        // attach to Telegram links in header and contact sections
+        var links = document.querySelectorAll(
+          ".social-icons a, .contact-social a"
+        );
+        links.forEach(function (a) {
+          var label = (
+            a.getAttribute("aria-label") ||
+            a.getAttribute("title") ||
+            ""
+          ).toLowerCase();
+          if (label.indexOf("telegram") !== -1) {
+            a.addEventListener("click", function (ev) {
+              ev.preventDefault();
+              openLightbox();
+            });
+          }
+        });
+
+        // clicking anywhere on the lightbox (backdrop or image) closes it
+        lightbox.addEventListener("click", function () {
+          closeLightbox();
+        });
+
+        // close with Escape as well
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeLightbox();
         });
       })();
     </script>
