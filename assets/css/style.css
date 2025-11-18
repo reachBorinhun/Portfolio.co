@@ -4,10 +4,37 @@
   box-sizing: border-box !important;
 }
 
-html, body {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
+/* Local Roboto variable fonts */
+@font-face {
+  font-family: "RobotoVarLocal";
+  src: url("../Font/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RobotoVarLocal";
+  src: url("../Font/Roboto-Italic-VariableFont_wdth,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  line-height: 1.6;
+  position: relative;
+  font-family: "RobotoVarLocal", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden; /* Allow vertical scroll, prevent horizontal */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
 
 :root {
   --color-bg: #f0f0f0;
@@ -18,24 +45,25 @@ html, body {
 html[data-theme="dark"] {
   --color-bg: #010100;
   --color-fg: #ffffff;
-   --color-line: rgba(255, 255, 255, 0.1);
+  --color-line: rgba(255, 255, 255, 0.1);
 }
 
-body {
-  display: table;
+/* New class for full-height sections */
+.section-full {
+  min-height: 100vh;
   width: 100%;
-  height: 100%;
-  background-color: var(--color-bg);
-  color: var(--color-fg); 
-  line-height: 1.6;
-  position: relative;
-  font-family: sans-serif;
-  overflow: hidden;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  padding: 80px 0; /* Add padding to avoid content touching navbar */
+}
+
+/* Card styling for dark theme */
+html[data-theme="dark"] .card {
+  background-color: #1a1a1a;
+  color: var(--color-fg);
+  border: 1px solid var(--color-line);
 }
 
 .lines {
-  position: absolute;
+  position: fixed; /* Changed to fixed to stay in background */
   top: 0;
   left: 0;
   right: 0;
@@ -51,19 +79,24 @@ body {
   height: 100%;
   top: 0;
   left: 50%;
-  background: var(--color-line) ;
+  background: var(--color-line);
   overflow: hidden;
 }
 
 .line::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   height: 15vh;
   width: 100%;
   top: -50%;
   left: 0;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    #ffffff 75%,
+    #ffffff 100%
+  );
   animation: drop 7s 0s infinite;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
@@ -94,35 +127,1664 @@ body {
   }
 }
 
-header a, 
+/* About main title styling - visually distinct from section headings
+   Keep the heading at the top-center of the #about section (static flow)
+   so it appears consistently above the About content on all screen sizes. */
+.about-main-title {
+  font-size: clamp(1.8rem, 4.4vw, 3rem);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: transparent;
+  position: relative; /* normal document flow, sits above section content */
+  display: block;
+  pointer-events: auto;
+  text-align: center;
+  margin-bottom: 1rem;
+  /* subtle gradient text to make "About" pop */
+  background-image: linear-gradient(90deg, #ffffff 0%, #d5e6ff 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 6px 26px rgba(2, 2, 2, 0.6);
+}
+.about-main-title::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 96px;
+  background: linear-gradient(
+    90deg,
+    rgba(213, 230, 255, 0.26),
+    rgba(255, 255, 255, 0.06)
+  );
+  margin: 12px auto 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 767.98px) {
+  .about-main-title {
+    font-size: clamp(1.4rem, 6.4vw, 1.8rem);
+  }
+  .about-main-title::after {
+    width: 56px;
+  }
+}
+
+/* Add spacing between the About heading and the two-column content */
+#about .container > .row {
+  padding-top: 2.25rem; /* ~36px default spacing */
+}
+
+@media (min-width: 768px) {
+  #about .container > .row {
+    padding-top: 3.5rem; /* more breathing room on tablets/desktop */
+  }
+}
+
+/* Education / skill pill styling (image + label)
+   Improvements:
+   - Ensure icons (FontAwesome or Iconify SVGs) scale and center correctly
+   - Increase tap target and consistent spacing
+   - Keep labels visible on small screens (hide only when extremely constrained)
+   - Use currentColor for icons so they follow the pill's color
+*/
+.education-pills {
+  gap: 0.5rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+.education-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem; /* slightly larger for touch targets */
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  box-shadow: 0 6px 18px rgba(2, 2, 2, 0.3);
+  font-size: 0.86rem;
+  color: var(--color-fg);
+  min-height: 36px; /* ensure consistent height */
+  line-height: 1;
+  transition: transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 180ms ease;
+}
+.education-pill:focus,
+.education-pill:focus-visible {
+  outline: 2px solid rgba(200, 215, 255, 0.14);
+  outline-offset: 3px;
+}
+.education-pill .education-pill-icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: currentColor; /* match label color */
+  flex: 0 0 22px;
+}
+/* Iconify / SVG icons - make sure SVGs fit the container */
+.education-pill .education-pill-icon svg,
+.education-pill .education-pill-icon svg * {
+  width: 18px !important;
+  height: 18px !important;
+  display: block;
+  fill: currentColor !important;
+}
+.education-pill .education-pill-label {
+  display: inline-block;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  font-size: 0.82rem;
+  color: inherit;
+  white-space: nowrap;
+}
+.education-pill img.education-pill-img {
+  width: 22px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.education-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(2, 2, 2, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+@media (max-width: 420px) {
+  /* On very small screens, abbreviate labels but keep icon visible */
+  .education-pill {
+    padding: 0.28rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  .education-pill .education-pill-label {
+    max-width: 6.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.98;
+  }
+}
+
+/* Make inner section headings (Experience / Education) visually lighter */
+.about-section-title {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+header a,
 header button {
   color: var(--color-fg);
   transition: color 0.3s ease-in-out;
 }
-header .navbar .navbar-brand{
+header .navbar {
+  background: rgba(var(--color-bg), 0.8);
+  backdrop-filter: blur(10px);
+}
+/* Horizontal padding for navbar (responsive) */
+header .navbar,
+header .navbar > .container,
+header .navbar > .container-fluid {
+  padding-inline: 1.25rem; /* default horizontal padding */
+}
+@media (min-width: 992px) {
+  header .navbar,
+  header .navbar > .container,
+  header .navbar > .container-fluid {
+    padding-inline: 3rem; /* more space on larger screens */
+  }
+}
+header .navbar .navbar-brand {
   color: var(--color-fg);
 }
-header .navbar .navbar-nav .nav-item .nav-link{
+header .navbar .navbar-nav .nav-item .nav-link {
   color: var(--color-fg);
 }
-header .navbar .navbar-nav .nav-item .nav-link:hover{
+header .navbar .navbar-nav .nav-item .nav-link:hover {
   color: #b3b3b3;
   transition: 0.6s;
 }
-/* Add this new rule */
 header .btn i {
   color: var(--color-fg);
   transition: color 0.3s ease-in-out;
 }
-/* For section hero section */
 
-.hero-banner .box-swap h1 .auto-type{
-  font-size: 12px;
+/* Ensure the mobile navbar (burger) icon is white */
+.navbar-toggler {
+  border: none;
 }
-.hero-banner .content-box{
-  bottom: -500px;
+.navbar-toggler .navbar-toggler-icon {
+  /* white-stroked SVG (encoded) so icon always appears white */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
 }
-/* About page */
-.about-paeg{
+
+/* iPhone-like glass button */
+/* Professional iPhone-like glass buttons with tint variants */
+.btn-glass {
+  --glass-tint: rgba(200, 215, 255, 0.06); /* soft bluish tint */
+  --glass-border: rgba(255, 255, 255, 0.18);
+  position: relative;
+  display: inline-block;
+  padding: 0.64rem 1.15rem;
+  border-radius: 14px;
+  color: var(--color-fg);
+  /* background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.03)
+  ); */
+  background-color: transparent;
+  background-blend-mode: overlay;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 10px 36px rgba(2, 2, 2, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 180ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 160ms ease, background 160ms ease;
+  overflow: hidden;
+}
+.btn-glass::before {
+  /* top highlight */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 46%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0)
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.btn-glass::after {
+  /* glossy sheen */
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -30%;
+  width: 180%;
+  height: 140%;
+  background: radial-gradient(
+    900px 300px at 12% 12%,
+    rgba(255, 255, 255, 0.36),
+    rgba(255, 255, 255, 0.02) 30%,
+    transparent 48%
+  );
+  transform: rotate(20deg) translateX(0%);
+  opacity: 0.18;
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.24s ease;
+  pointer-events: none;
+}
+.btn-glass:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 28px 70px rgba(2, 2, 2, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+.btn-glass:hover::after {
+  transform: rotate(20deg) translateX(24%);
+  opacity: 0.28;
+}
+.btn-glass:active {
+  transform: translateY(-2px) scale(0.996);
+}
+.btn-glass:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.14);
+  outline-offset: 3px;
+}
+
+/* Variant: primary (slightly brighter glass) */
+.btn-glass--primary {
+  background-color: rgba(245, 250, 255, 0.06);
+  color: #010100;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Variant: muted (more translucent) */
+.btn-glass--muted {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--color-fg);
+  border-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.92;
+}
+
+html[data-theme="dark"] .btn-glass {
+  --glass-tint: rgba(160, 180, 220, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-glass,
+  .btn-glass::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* --- Glassmorphism button (Bootstrap .btn foundation) ---
+   Usage: add classes "btn btn-glass" to any <a> or <button>
+   Optional modifiers: .btn-glass--primary, .btn-glass--muted
+*/
+.btn.btn-glass {
+  --glass-tint: rgba(200, 215, 255, 0.06); /* soft bluish */
+  --glass-border: rgba(255, 255, 255, 0.18);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.85rem;
+  color: var(--color-fg);
+  /* make base button background transparent while keeping highlights/sheens */
+  background-color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: 0 10px 30px rgba(2, 2, 2, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 180ms ease, background 180ms ease, opacity 120ms ease;
+  text-decoration: none;
+  overflow: hidden;
+}
+.btn.btn-glass::before {
+  /* soft top highlight */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 48%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0)
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.btn.btn-glass::after {
+  /* subtle glossy sheen */
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -30%;
+  width: 180%;
+  height: 140%;
+  background: radial-gradient(
+    800px 260px at 12% 12%,
+    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0.02) 30%,
+    transparent 48%
+  );
+  transform: rotate(18deg) translateX(0%);
+  opacity: 0.16;
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 220ms ease;
+  pointer-events: none;
+}
+.btn.btn-glass:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 22px 50px rgba(2, 2, 2, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+.btn.btn-glass:hover::after {
+  transform: rotate(18deg) translateX(22%);
+  opacity: 0.26;
+}
+.btn.btn-glass:active {
+  transform: translateY(-2px) scale(0.997);
+}
+.btn.btn-glass:focus-visible {
+  outline: 3px solid rgba(200, 215, 255, 0.2);
+  outline-offset: 4px;
+}
+
+/* modifiers */
+.btn-glass--primary {
+  /* transparent primary modifier: use border/highlights only */
+  background-color: transparent !important;
+  color: #010100;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.btn-glass--muted {
+  background-color: transparent !important;
+  color: var(--color-fg);
+  border-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.95;
+}
+
+/* dark theme */
+html[data-theme="dark"] .btn.btn-glass {
+  --glass-tint: rgba(30, 36, 50, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  background-color: var(--glass-tint);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+/* Portfolio hero card */
+.portfolio-hero {
+  padding: 0;
+}
+
+.portfolio-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0 12px 0;
+}
+.portfolio-header .badge {
+  opacity: 0.98;
+}
+
+.portfolio-card {
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #0b0b0b; /* fallback while image loads */
+}
+.portfolio-card {
+  width: min(720px, 88vw); /* reduced width */
+  height: min(760px, 78vh); /* reduced height */
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #0b0b0b; /* fallback while image loads */
+}
+/* ensure CTA wrapper sits relative to the card */
+.portfolio-card .portfolio-cta-wrap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   width: 100%;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start; /* left align */
+  gap: 12px;
+  z-index: 28;
+}
+.portfolio-card .card-img-main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 0; /* keep image behind overlays */
+}
+.portfolio-tags {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap; /* allow pills to wrap instead of overflowing */
+  z-index: 14;
+}
+.tag-pill {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  transition: transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 200ms ease, background 180ms ease;
+}
+.tag-pill i {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.tag-pill:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(2, 2, 2, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+}
+.portfolio-title {
+  position: absolute;
+  z-index: 16;
+  text-align: center;
+  color: #ffffff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 16px;
+}
+.portfolio-title h2 {
+  font-size: clamp(28px, 6.4vw, 48px);
+  line-height: 1.02;
+  font-weight: 700;
+}
+.portfolio-cta {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 12;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+}
+.portfolio-demo {
+  position: absolute;
+  left: 18px;
+  bottom: 68px; /* sit above the main CTA */
+  z-index: 12;
+  border-radius: 12px;
+  padding: 0.5rem 0.9rem;
+}
+
+/* Make the demo button look like the tag pills (pill shape, smaller, glassy) */
+.portfolio-demo-left {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px; /* full pill */
+  font-size: 0.9rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 200ms ease, background 180ms ease;
+}
+.portfolio-demo-left:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(2, 2, 2, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+}
+.portfolio-demo:hover,
+.portfolio-cta:hover,
+.portfolio-demo:focus-visible,
+.portfolio-cta:focus-visible {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 28px 60px rgba(2, 2, 2, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+
+/* Left-center placement for demo button on large screens */
+.portfolio-demo-left {
+  left: 18px;
+  bottom: 18px;
+  top: auto;
+  transform: none;
+  padding: 0.6rem 1rem;
+  z-index: 30; /* ensure it's above the image */
+  display: inline-flex;
+  align-items: center;
+}
+.portfolio-demo-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.portfolio-demo-left::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 160%;
+  height: 120%;
+  border-radius: 12px;
+  background: radial-gradient(
+    400px 120px at 10% 10%,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.03) 28%,
+    transparent 50%
+  );
+  transform: rotate(18deg) translateX(0%);
+  opacity: 0.12;
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 220ms ease;
+  pointer-events: none;
+}
+.portfolio-demo-left:hover::after {
+  transform: rotate(18deg) translateX(20%);
+  opacity: 0.28;
+}
+
+@media (max-width: 767px) {
+  .portfolio-demo-left {
+    left: 12px;
+    bottom: 58px;
+    top: auto;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .portfolio-card {
+    height: calc(100vh - 120px);
+    border-radius: 16px;
+  }
+  .portfolio-title h2 {
+    font-size: clamp(20px, 7.5vw, 32px);
+  }
+  .portfolio-cta {
+    left: 12px;
+    bottom: 12px;
+  }
+  .portfolio-tags {
+    /* move tags into normal flow and center them on small screens */
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 12px 0 0 0;
+    z-index: 18;
+  }
+}
+
+html[data-theme="dark"] .portfolio-card {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* Constrain cards when used inside the portfolio grid so three fit and stay centered */
+.portfolio-grid .portfolio-card {
+  width: 600px !important; /* fixed width on all screens */
+  height: 600px !important; /* fixed height on all screens */
+  margin: 0 auto; /* center inside the column */
+  border-radius: 18px;
+  overflow: hidden;
+  display: block;
+  box-shadow: 0 40px 140px rgba(2, 2, 2, 0.3);
+}
+.portfolio-grid .portfolio-card .card-img-main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.portfolio-grid .portfolio-overlay {
+  z-index: 10;
+}
+
+/* Center the card inside each Bootstrap column so the three cards align visually */
+.portfolio-grid .col-lg-4,
+.portfolio-grid .col-md-6 {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* allow equal column heights if needed */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.btn-glass,
+  .btn.btn-glass::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-glass,
+  .btn-glass::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Glass social icons */
+.social-icons {
+  align-items: center;
+}
+.social-link {
+  --size: 48px;
+  display: inline-grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  color: var(--color-fg);
+  text-decoration: none;
+  position: relative;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 8px 20px rgba(2, 2, 2, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 180ms ease, background 160ms ease, color 160ms ease;
+}
+.social-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.social-link::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  width: 160%;
+  height: 120%;
+  border-radius: inherit;
+  background: radial-gradient(
+    400px 120px at 10% 10%,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.02) 30%,
+    transparent 50%
+  );
+  transform: rotate(18deg) translateX(0%);
+  opacity: 0.12;
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 220ms ease;
+  pointer-events: none;
+}
+.social-link:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 18px 40px rgba(2, 2, 2, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.social-link:hover::after {
+  transform: rotate(18deg) translateX(20%);
+  opacity: 0.22;
+}
+.social-link:focus-visible {
+  outline: 3px solid rgba(200, 215, 255, 0.18);
+  outline-offset: 4px;
+}
+
+/* Slightly larger on bigger screens */
+@media (min-width: 768px) {
+  .social-link {
+    --size: 56px;
+  }
+}
+
+/* Dark theme adjustments */
+html[data-theme="dark"] .social-link {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-link,
+  .social-link::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================
+   About Section - Glassmorphism Design
+   ============================================ */
+
+/* Glassmorphism Card - Individual Cards */
+.about-glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem !important;
+  color: #e5e5e5 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-bottom: 1rem;
+}
+
+.about-glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Section Titles */
+.about-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  margin-bottom: 0;
+  display: block;
+  visibility: visible;
+}
+
+/* Education Card Content */
+.about-glass-card .d-flex {
+  align-items: flex-start;
+}
+
+/* Education Logo Wrapper */
+.education-logo-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* Education Logo */
+.education-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: brightness(1.1) contrast(1.05);
+  display: block;
+}
+
+/* Education Accordion Card */
+.education-accordion-card {
+  cursor: pointer;
+  position: relative;
+}
+
+/* Education Accordion Button */
+.education-accordion-btn {
+  color: #e5e5e5 !important;
+  cursor: pointer;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  display: block;
+  background: transparent !important;
+  border: none !important;
+}
+
+.education-accordion-btn:hover {
+  opacity: 1;
+  color: #ffffff !important;
+}
+
+.education-accordion-btn:focus,
+.education-accordion-btn:active,
+.education-accordion-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Toggle Icon */
+.education-toggle-icon {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 0.25rem;
+}
+
+.education-accordion-btn[aria-expanded="true"] .education-toggle-icon {
+  transform: rotate(180deg);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.education-accordion-btn:hover .education-toggle-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Accordion Content */
+.education-accordion-content {
+  color: #e5e5e5 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.collapse:not(.show) {
+  display: none;
+}
+
+.collapse.show {
+  display: block !important;
+}
+
+.education-extra-text {
+  color: #d1d1d1;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Education Pills (Image-only badges) */
+.education-pills {
+  margin-top: 0.5rem;
+}
+
+.education-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 6px 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  min-width: 32px;
+  height: 32px;
+}
+
+.education-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.education-pill-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(1.1) contrast(1.05);
+}
+
+/* Green Glowing Dot */
+.education-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 8px #4ade80, 0 0 12px rgba(74, 222, 128, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 12px #4ade80, 0 0 20px rgba(74, 222, 128, 0.8);
+  }
+}
+
+/* Education Text */
+.education-text {
+  color: #e5e5e5 !important;
+  font-size: 1rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* Year Text */
+.about-glass-card small.text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.875rem;
+}
+
+/* Philosophy Card */
+.about-philosophy-text {
+  color: #d1d1d1;
+  font-size: 1rem;
+  line-height: 1.8;
+  font-style: italic;
+  margin: 0;
+  text-align: left;
+}
+
+/* CTA Button */
+.btn-about-cta {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e5e5e5;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-about-cta:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-about-cta:focus {
+  outline: 2px solid rgba(74, 222, 128, 0.5);
+  outline-offset: 2px;
+}
+
+.btn-about-cta:active {
+  transform: translateY(0);
+}
+
+/* Premium looping sheen effect: subtle left-to-right sweep that repeats */
+.btn-about-cta {
+  position: relative;
+  overflow: hidden;
+  z-index: 0; /* keep pseudo-element behind text if needed */
+}
+.btn-about-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-18deg);
+  filter: blur(6px);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  animation: btn-sheen 2.8s linear infinite;
+}
+
+@keyframes btn-sheen {
+  0% {
+    left: -80%;
+  }
+  100% {
+    left: 160%;
+  }
+}
+
+/* Slightly intensify on hover */
+.btn-about-cta:hover::before {
+  opacity: 1;
+  filter: blur(4px);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-about-cta::before {
+    animation: none !important;
+    display: none;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .about-glass-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .about-section-title {
+    font-size: 1.125rem;
+  }
+
+  .education-text,
+  .about-philosophy-text {
+    font-size: 0.95rem;
+  }
+
+  .education-logo-wrapper {
+    width: 50px;
+    height: 50px;
+    padding: 6px;
+  }
+
+  .education-extra-text {
+    font-size: 0.9rem;
+  }
+
+  .education-pill {
+    min-width: 28px;
+    height: 28px;
+    padding: 4px 8px;
+  }
+
+  .education-pill-img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .education-toggle-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Disable animation for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .education-dot {
+    animation: none;
+    box-shadow: 0 0 8px #4ade80;
+  }
+
+  .btn-about-cta,
+  .about-glass-card,
+  .education-logo-wrapper,
+  .education-logo,
+  .education-toggle-icon,
+  .education-pill,
+  .education-accordion-btn {
+    transition: none;
+  }
+
+  .btn-about-cta:hover,
+  .about-glass-card:hover,
+  .education-logo-wrapper:hover,
+  .education-pill:hover {
+    transform: none;
+  }
+
+  .education-logo-wrapper:hover .education-logo {
+    transform: none;
+  }
+
+  .education-accordion-btn[aria-expanded="true"] .education-toggle-icon {
+    transform: rotate(180deg);
+  }
+}
+
+/* ======= Skills Grid (new) =======
+   Uses Bootstrap grid for layout and glass cards for each category.
+   Visual goals: rounded glass squares, large centered icon, concise title,
+   small pill list below. Hover sheen + subtle halo.
+*/
+.skills-grid {
+  --skill-card-height: 260px;
+}
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: var(--skill-card-height);
+  padding: 1.25rem;
+  border-radius: 16px;
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 260ms ease;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.36);
+  position: relative;
+}
+.skill-card .skill-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  margin-bottom: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.02),
+    0 8px 24px rgba(2, 2, 2, 0.32);
+}
+.skill-card .skill-icon .iconify {
+  display: inline-grid;
+}
+.skill-card .skill-icon .iconify svg {
+  width: 48px !important;
+  height: 48px !important;
+  display: block;
+}
+.skill-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0.25rem 0;
+}
+.skill-desc {
+  margin: 0;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+.skill-card .education-pills {
+  margin-top: 0.8rem;
+  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.skill-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 36px 80px rgba(0, 0, 0, 0.42);
+}
+
+/* subtle radial halo behind icon on hover */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 140px;
+  height: 140px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0) 60%
+  );
+  filter: blur(18px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.skill-card:hover::before {
+  opacity: 0.9;
+  filter: blur(22px);
+}
+
+@media (max-width: 991.98px) {
+  .skill-card {
+    min-height: 220px;
+  }
+  .skill-card .skill-icon {
+    width: 64px;
+    height: 64px;
+  }
+  .skill-card::before {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Stack smaller on narrow screens - two per row on small devices */
+  .skills-grid .col-12.col-sm-6 {
+    padding-inline: 8px;
+  }
+  .skill-card {
+    min-height: 200px;
+    padding: 1rem;
+  }
+  .skill-card .skill-icon {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card,
+  .skill-card:hover {
+    transition: none;
+    transform: none;
+  }
+  .skill-card::before {
+    display: none;
+  }
+}
+
+/* Layout for the reference-style skills grid (big-left, stacked-right) */
+.skills-layout {
+  align-items: stretch;
+}
+.skill-card--primary {
+  padding: 1.5rem;
+}
+.skill-card--primary {
+  /* make the primary card feel more prominent */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);
+}
+.skill-card--primary .skill-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  margin-bottom: 4px; /* tightened gap to description */
+}
+.skill-card--primary .skill-desc {
+  margin-top: 2px;
+  margin-bottom: 8px;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+.skill-card--primary .skill-tile-grid {
+  gap: 10px;
+  margin-top: 6px;
+}
+.skill-card--primary .skill-tile {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.45);
+  padding: 8px 12px;
+  border-radius: 12px;
+  min-height: 44px;
+  gap: 10px;
+}
+.skill-card--primary .skill-tile .iconify {
+  width: 28px;
+  height: 28px;
+}
+.skill-card--primary .skill-tile .tile-label {
+  margin-left: 8px;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 992px) {
+  .skill-card--primary .skill-title {
+    font-size: 1.6rem;
+  }
+  .skill-card--primary .skill-desc {
+    font-size: 0.96rem;
+  }
+}
+.skill-card--primary .primary-left {
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.skill-icon.big {
+  width: 120px;
+  height: 120px;
+  border-radius: 18px;
+  font-size: 3.6rem;
+}
+.skill-icon.big .iconify svg {
+  width: 96px !important;
+  height: 96px !important;
+}
+.skill-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.skill-tile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  min-height: 44px;
+}
+.skill-tile .iconify {
+  width: 28px;
+  height: 28px;
+}
+
+/* Contact section styles */
+.contact-card {
+  /* increased inner spacing for more comfortable content breathing room */
+  padding: 2.4rem 2.6rem;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.015)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.contact-input {
+  min-width: 280px;
+  max-width: 640px;
+  width: 100%;
+  border-radius: 10px;
+  /* slightly larger input padding for easier tap targets */
+  padding: 0.9rem 1.1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.contact-input:focus {
+  outline: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+.contact-card .d-flex.align-items-center {
+  /* make the input + button feel separated without relying on margin utilities */
+  gap: 0.85rem;
+}
+.contact-social .social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 160ms ease, color 160ms ease;
+  font-size: 0; /* reset to size icons via svg rules */
+}
+.contact-social .social-link:hover {
+  transform: translateY(-6px);
+}
+.contact-social .social-link .iconify svg {
+  width: 34px !important;
+  height: 34px !important;
+  display: block;
+}
+/* Font Awesome icons in contact section (fallback) */
+.contact-social .social-link i {
+  font-size: 1.9rem; /* ~30px */
+  line-height: 1;
+  display: inline-block;
+}
+
+/* toast positioned at top-center of the contact card */
+.contact-toast {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: rgba(24, 24, 24, 0.96);
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+  z-index: 1200;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+.contact-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 575.98px) {
+  .contact-input {
+    min-width: 220px;
+    max-width: 100%;
+  }
+  /* keep adequate padding on small screens but slightly reduced */
+  .contact-card {
+    padding: 1.25rem;
+  }
+}
+.skill-tile .tile-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.skill-card--stack {
+  padding: 1rem;
+}
+.skill-card--stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.skill-card--stack .education-pills {
+  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.skill-card--stack .education-pill {
+  padding: 0.32rem 0.6rem;
+  height: auto;
+  min-height: 30px;
+}
+
+/* Make sure the stacked column fills the available height and its three cards distribute evenly */
+.skills-layout > .col-12.col-lg-5 > .d-flex.h-100 {
+  min-height: 100%;
+}
+.skills-layout > .col-12.col-lg-5 > .d-flex.h-100 > .about-glass-card {
+  flex: 1 1 0;
+}
+
+@media (max-width: 991.98px) {
+  .skill-icon.big {
+    width: 96px;
+    height: 96px;
+  }
+  .skill-icon.big .iconify svg {
+    width: 72px !important;
+    height: 72px !important;
+  }
+  .skill-tile-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .skill-icon.big {
+    width: 84px;
+    height: 84px;
+  }
+  .skill-icon.big .iconify svg {
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .skill-tile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ensure left primary card matches the combined height of the stacked right column
+   by making the columns flex containers and allowing the primary card to grow. */
+@media (min-width: 992px) {
+  .skills-layout > .col-12.col-lg-7,
+  .skills-layout > .col-12.col-lg-5 {
+    display: flex;
+    flex-direction: column;
+  }
+  /* let the primary card fill the left column */
+  .skills-layout > .col-12.col-lg-7 > .about-glass-card {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* keep content vertically centered */
+  }
+  /* ensure the inner layout inside the primary card stretches as needed */
+  .skills-layout > .col-12.col-lg-7 > .about-glass-card > .d-flex {
+    flex: 1 1 0;
+    align-items: stretch;
+  }
+}
+
+/* Center primary card content horizontally and vertically on large screens */
+@media (min-width: 992px) {
+  .skills-layout > .col-12.col-lg-7 > .about-glass-card {
+    align-items: center;
+  }
+  .skills-layout > .col-12.col-lg-7 > .about-glass-card > .d-flex {
+    /* ensure the inner row takes full width and centers children */
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+  .skill-card--primary .primary-right {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .skill-tile-grid {
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .skill-tile {
+    justify-content: center;
+  }
 }
