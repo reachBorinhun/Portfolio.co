@@ -1,409 +1,396 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>HUN REACH BORIN - Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/img/ce0d12330a7fc0aaf18b4defb12bdd75.jpg" />
+    <!-- Services glass styles (inlined for services section) -->
+    <style>
+      /* Glass-only cards: neutral, elegant glassmorphism without color gradients */
+      :root {
+        --svc-text: #e5e5e5;
+        --svc-muted: #c0c0c0;
+        --svc-tools: #a0a0a0;
+        --transition-smooth: 0.3s;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="./assets/css/bootstrap.css" />
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>HUN REACH BORIN - Portfolio</title>
-  <!-- Favicon -->
-  <link rel="icon" href="./assets/img/ce0d12330a7fc0aaf18b4defb12bdd75.jpg" />
-  <!-- Services glass styles (inlined for services section) -->
-  <style>
-    /* Glass-only cards: neutral, elegant glassmorphism without color gradients */
-    :root {
-      --svc-text: #e5e5e5;
-      --svc-muted: #c0c0c0;
-      --svc-tools: #a0a0a0;
-      --transition-smooth: 0.3s;
-    }
+      .gradient-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        padding: 2rem;
+        min-height: 520px; /* increased height for more presence */
+        color: var(--svc-text);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform var(--transition-smooth) ease,
+          box-shadow var(--transition-smooth) ease;
+        will-change: transform, box-shadow;
+        background: rgba(255, 255, 255, 0.03); /* subtle base */
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+      }
 
-    .gradient-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      padding: 2rem;
-      min-height: 520px;
-      /* increased height for more presence */
-      color: var(--svc-text);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform var(--transition-smooth) ease,
-        box-shadow var(--transition-smooth) ease;
-      will-change: transform, box-shadow;
-      background: rgba(255, 255, 255, 0.03);
-      /* subtle base */
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
-    }
+      /* glass overlay for softer highlight and blur */
+      .gradient-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(14px) saturate(1.04);
+        -webkit-backdrop-filter: blur(14px) saturate(1.04);
+        pointer-events: none;
+      }
 
-    /* glass overlay for softer highlight and blur */
-    .gradient-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px) saturate(1.04);
-      -webkit-backdrop-filter: blur(14px) saturate(1.04);
-      pointer-events: none;
-    }
-
-    .gradient-card .card-inner {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* give card content more right breathing room so titles/descriptions don't feel cramped */
-    .gradient-card .card-inner {
-      padding-right: 2.4rem;
-    }
-
-    @media (max-width: 575.98px) {
       .gradient-card .card-inner {
-        padding-right: 1rem;
+        position: relative;
+        z-index: 2;
       }
-    }
-
-    /* Make sure any SVG/Iconify icons inside .service-icon scale and use currentColor */
-    .service-icon svg,
-    .service-icon .iconify svg {
-      width: 28px !important;
-      height: 28px !important;
-      display: block;
-      fill: currentColor !important;
-    }
-
-    /* remove colorful gradients — keep uniform neutral look */
-    /* service icon */
-    .service-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--svc-text);
-      margin-right: 1rem;
-      transition: transform var(--transition-smooth) ease,
-        box-shadow var(--transition-smooth) ease;
-    }
-
-    /* gentler micro animation */
-    @keyframes floaty {
-      0% {
-        transform: translateY(0);
+      /* give card content more right breathing room so titles/descriptions don't feel cramped */
+      .gradient-card .card-inner {
+        padding-right: 2.4rem;
+      }
+      @media (max-width: 575.98px) {
+        .gradient-card .card-inner {
+          padding-right: 1rem;
+        }
       }
 
-      50% {
+      /* Make sure any SVG/Iconify icons inside .service-icon scale and use currentColor */
+      .service-icon svg,
+      .service-icon .iconify svg {
+        width: 28px !important;
+        height: 28px !important;
+        display: block;
+        fill: currentColor !important;
+      }
+
+      /* remove colorful gradients — keep uniform neutral look */
+      /* service icon */
+      .service-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--svc-text);
+        margin-right: 1rem;
+        transition: transform var(--transition-smooth) ease,
+          box-shadow var(--transition-smooth) ease;
+      }
+
+      /* gentler micro animation */
+      @keyframes floaty {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .service-icon {
+        animation: floaty 6s ease-in-out infinite;
+      }
+      .gradient-card:hover .service-icon {
+        animation-play-state: paused;
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .service-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.6rem;
+      }
+      .service-title {
+        font-weight: 800;
+        font-size: 1.1rem;
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      .service-sub {
+        font-size: 0.95rem;
+        color: var(--svc-muted);
+        font-style: italic;
+        margin: 0;
+      }
+
+      .service-desc {
+        color: #f2f2f2;
+        margin-top: 0.65rem;
+        margin-bottom: 0.65rem;
+        font-size: 0.98rem;
+        line-height: 1.45;
+      }
+      .service-tools {
+        color: var(--svc-tools);
+        font-size: 0.86rem;
+        font-style: italic;
+        margin-bottom: 0.6rem;
+      }
+
+      /* Benefits list: more spacing, divider line, and compact checks */
+      .service-benefits {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0.6rem;
+        margin-top: 1.05rem; /* increase top spacing */
+        padding-bottom: 0.85rem; /* space for the divider */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04); /* subtle line under benefits */
+      }
+      .service-benefits li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.9rem; /* slightly smaller than before */
+        color: var(--svc-text);
+      }
+      /* replace boxed check with a simple colored check icon */
+      .service-benefits .check {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        margin-right: 0.5rem;
+        background: transparent !important;
+        border-radius: 0 !important;
+        color: #86d89f; /* pleasant green for checks */
+        font-weight: 600;
+        font-size: 0.95rem; /* icon size */
+      }
+      .service-benefits .check svg,
+      .service-benefits .check .iconify svg {
+        width: 16px !important;
+        height: 16px !important;
+        display: block;
+        fill: currentColor !important;
+      }
+
+      /* hover elevation — neutral glow */
+      .gradient-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45),
+          0 0 28px rgba(255, 255, 255, 0.03) inset;
+      }
+
+      /* subtle sheen */
+      .gradient-card::before {
+        content: "";
+        position: absolute;
+        top: -30%;
+        left: -20%;
+        width: 140%;
+        height: 140%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.015) 30%,
+          rgba(255, 255, 255, 0)
+        );
+        transform: rotate(-18deg);
+        pointer-events: none;
+        opacity: 0.55;
+      }
+      .gradient-card:hover::before {
+        opacity: 0.92;
+        transform: translateX(6%) rotate(-18deg);
+        transition: transform var(--transition-smooth) ease,
+          opacity var(--transition-smooth) ease;
+      }
+
+      /* Accent variant for a premium, warm-green / light brown tone */
+      .gradient-card.gradient-card--accent {
+        /* warm, desaturated olive-beige tint over the glass */
+        background: linear-gradient(
+          135deg,
+          rgba(236, 231, 222, 0.06),
+          rgba(197, 179, 147, 0.04)
+        );
+        border: 1px solid rgba(230, 220, 200, 0.06);
+      }
+      .gradient-card.gradient-card--accent::after {
+        background: rgba(245, 240, 230, 0.05);
+        border: 1px solid rgba(245, 240, 230, 0.06);
+        backdrop-filter: blur(14px) saturate(1.06);
+        -webkit-backdrop-filter: blur(14px) saturate(1.06);
+      }
+      .gradient-card.gradient-card--accent::before {
+        /* warmer sheen for the accent card */
+        content: "";
+        position: absolute;
+        top: -30%;
+        left: -20%;
+        width: 140%;
+        height: 140%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 250, 240, 0.06),
+          rgba(255, 245, 230, 0.02) 30%,
+          rgba(255, 245, 230, 0)
+        );
+        transform: rotate(-18deg);
+        pointer-events: none;
+        opacity: 0.6;
+      }
+      .gradient-card.gradient-card--accent {
+        /* warm, light-brown / beige tint over the glass, slightly taller */
+        background: linear-gradient(
+          135deg,
+          rgba(210, 180, 140, 0.06),
+          rgba(200, 170, 130, 0.04)
+        );
+        border: 1px solid rgba(210, 180, 140, 0.06);
+        min-height: 640px; /* make the accent card noticeably taller */
+        box-shadow: 0 10px 40px rgba(18, 12, 8, 0.36);
+      }
+      .gradient-card.gradient-card--accent::after {
+        /* soft glass overlay + warm bottom glow (light brown/orange) */
+        background: linear-gradient(
+          180deg,
+          rgba(245, 240, 230, 0) 40%,
+          rgba(228, 200, 160, 0.035) 62%,
+          rgba(255, 119, 0, 0.1) 88%
+        );
+        border: 1px solid rgba(245, 240, 230, 0.06);
+        backdrop-filter: blur(16px) saturate(1.08);
+        -webkit-backdrop-filter: blur(16px) saturate(1.08);
+        /* subtle inset glow to concentrate color at the bottom */
+        box-shadow: inset 0 -56px 88px rgba(210, 140, 80, 0.12);
+      }
+      .gradient-card.gradient-card--accent::before {
+        /* warmer sheen for the accent card */
+        content: "";
+        position: absolute;
+        top: -30%;
+        left: -20%;
+        width: 140%;
+        height: 140%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 250, 240, 0.08),
+          rgba(255, 245, 230, 0.03) 30%,
+          rgba(255, 245, 230, 0)
+        );
+        transform: rotate(-18deg);
+        pointer-events: none;
+        opacity: 0.72;
+        transition: transform var(--transition-smooth) ease,
+          opacity var(--transition-smooth) ease;
+      }
+      /* warmer icon background inside the accent card */
+      .gradient-card.gradient-card--accent .service-icon {
+        background: rgba(210, 180, 140, 0.08);
+        color: #0b0b0b;
+        box-shadow: 0 6px 18px rgba(18, 12, 8, 0.28) inset;
+      }
+
+      .btn-cta-outline {
+        border-radius: 30px;
+        padding: 0.55rem 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: var(--svc-text);
+        background: transparent;
+        transition: box-shadow var(--transition-smooth) ease,
+          transform 0.12s ease;
+      }
+      .btn-cta-outline:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
         transform: translateY(-3px);
       }
 
-      100% {
-        transform: translateY(0);
-      }
-    }
-
-    .service-icon {
-      animation: floaty 6s ease-in-out infinite;
-    }
-
-    .gradient-card:hover .service-icon {
-      animation-play-state: paused;
-      transform: translateY(-6px) scale(1.04);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
-    }
-
-    .service-head {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .service-title {
-      font-weight: 800;
-      font-size: 1.1rem;
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-
-    .service-sub {
-      font-size: 0.95rem;
-      color: var(--svc-muted);
-      font-style: italic;
-      margin: 0;
-    }
-
-    .service-desc {
-      color: #f2f2f2;
-      margin-top: 0.65rem;
-      margin-bottom: 0.65rem;
-      font-size: 0.98rem;
-      line-height: 1.45;
-    }
-
-    .service-tools {
-      color: var(--svc-tools);
-      font-size: 0.86rem;
-      font-style: italic;
-      margin-bottom: 0.6rem;
-    }
-
-    /* Benefits list: more spacing, divider line, and compact checks */
-    .service-benefits {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 0.6rem;
-      margin-top: 1.05rem;
-      /* increase top spacing */
-      padding-bottom: 0.85rem;
-      /* space for the divider */
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      /* subtle line under benefits */
-    }
-
-    .service-benefits li {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.35rem;
-      font-size: 0.9rem;
-      /* slightly smaller than before */
-      color: var(--svc-text);
-    }
-
-    /* replace boxed check with a simple colored check icon */
-    .service-benefits .check {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      padding: 0;
-      margin-right: 0.5rem;
-      background: transparent !important;
-      border-radius: 0 !important;
-      color: #86d89f;
-      /* pleasant green for checks */
-      font-weight: 600;
-      font-size: 0.95rem;
-      /* icon size */
-    }
-
-    .service-benefits .check svg,
-    .service-benefits .check .iconify svg {
-      width: 16px !important;
-      height: 16px !important;
-      display: block;
-      fill: currentColor !important;
-    }
-
-    /* hover elevation — neutral glow */
-    .gradient-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45),
-        0 0 28px rgba(255, 255, 255, 0.03) inset;
-    }
-
-    /* subtle sheen */
-    .gradient-card::before {
-      content: "";
-      position: absolute;
-      top: -30%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: linear-gradient(120deg,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.015) 30%,
-          rgba(255, 255, 255, 0));
-      transform: rotate(-18deg);
-      pointer-events: none;
-      opacity: 0.55;
-    }
-
-    .gradient-card:hover::before {
-      opacity: 0.92;
-      transform: translateX(6%) rotate(-18deg);
-      transition: transform var(--transition-smooth) ease,
-        opacity var(--transition-smooth) ease;
-    }
-
-    /* Accent variant for a premium, warm-green / light brown tone */
-    .gradient-card.gradient-card--accent {
-      /* warm, desaturated olive-beige tint over the glass */
-      background: linear-gradient(135deg,
-          rgba(236, 231, 222, 0.06),
-          rgba(197, 179, 147, 0.04));
-      border: 1px solid rgba(230, 220, 200, 0.06);
-    }
-
-    .gradient-card.gradient-card--accent::after {
-      background: rgba(245, 240, 230, 0.05);
-      border: 1px solid rgba(245, 240, 230, 0.06);
-      backdrop-filter: blur(14px) saturate(1.06);
-      -webkit-backdrop-filter: blur(14px) saturate(1.06);
-    }
-
-    .gradient-card.gradient-card--accent::before {
-      /* warmer sheen for the accent card */
-      content: "";
-      position: absolute;
-      top: -30%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: linear-gradient(120deg,
-          rgba(255, 250, 240, 0.06),
-          rgba(255, 245, 230, 0.02) 30%,
-          rgba(255, 245, 230, 0));
-      transform: rotate(-18deg);
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    .gradient-card.gradient-card--accent {
-      /* warm, light-brown / beige tint over the glass, slightly taller */
-      background: linear-gradient(135deg,
-          rgba(210, 180, 140, 0.06),
-          rgba(200, 170, 130, 0.04));
-      border: 1px solid rgba(210, 180, 140, 0.06);
-      min-height: 640px;
-      /* make the accent card noticeably taller */
-      box-shadow: 0 10px 40px rgba(18, 12, 8, 0.36);
-    }
-
-    .gradient-card.gradient-card--accent::after {
-      /* soft glass overlay + warm bottom glow (light brown/orange) */
-      background: linear-gradient(180deg,
-          rgba(245, 240, 230, 0) 40%,
-          rgba(228, 200, 160, 0.035) 62%,
-          rgba(255, 119, 0, 0.1) 88%);
-      border: 1px solid rgba(245, 240, 230, 0.06);
-      backdrop-filter: blur(16px) saturate(1.08);
-      -webkit-backdrop-filter: blur(16px) saturate(1.08);
-      /* subtle inset glow to concentrate color at the bottom */
-      box-shadow: inset 0 -56px 88px rgba(210, 140, 80, 0.12);
-    }
-
-    .gradient-card.gradient-card--accent::before {
-      /* warmer sheen for the accent card */
-      content: "";
-      position: absolute;
-      top: -30%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: linear-gradient(120deg,
-          rgba(255, 250, 240, 0.08),
-          rgba(255, 245, 230, 0.03) 30%,
-          rgba(255, 245, 230, 0));
-      transform: rotate(-18deg);
-      pointer-events: none;
-      opacity: 0.72;
-      transition: transform var(--transition-smooth) ease,
-        opacity var(--transition-smooth) ease;
-    }
-
-    /* warmer icon background inside the accent card */
-    .gradient-card.gradient-card--accent .service-icon {
-      background: rgba(210, 180, 140, 0.08);
-      color: #0b0b0b;
-      box-shadow: 0 6px 18px rgba(18, 12, 8, 0.28) inset;
-    }
-
-    .btn-cta-outline {
-      border-radius: 30px;
-      padding: 0.55rem 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: var(--svc-text);
-      background: transparent;
-      transition: box-shadow var(--transition-smooth) ease,
-        transform 0.12s ease;
-    }
-
-    .btn-cta-outline:hover {
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
-      transform: translateY(-3px);
-    }
-
-    .card-wrap {
-      margin-bottom: 1rem;
-    }
-
-    @media (min-width: 768px) {
       .card-wrap {
         margin-bottom: 1rem;
-        padding: 0 0.5rem;
       }
-    }
-
-    @media (max-width: 575.98px) {
-      .gradient-card {
-        padding: 1.15rem;
-        min-height: unset;
+      @media (min-width: 768px) {
+        .card-wrap {
+          margin-bottom: 1rem;
+          padding: 0 0.5rem;
+        }
       }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .service-icon {
-        animation: none !important;
+      @media (max-width: 575.98px) {
+        .gradient-card {
+          padding: 1.15rem;
+          min-height: unset;
+        }
       }
 
-      .gradient-card {
-        transition: none !important;
+      @media (prefers-reduced-motion: reduce) {
+        .service-icon {
+          animation: none !important;
+        }
+        .gradient-card {
+          transition: none !important;
+        }
       }
-    }
-  </style>
-  <!-- Iconify (used by icones.js.org) for lightweight SVG icons -->
-  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
-</head>
+    </style>
+    <!-- Iconify (used by icones.js.org) for lightweight SVG icons -->
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <div class="lines position-fixed">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
 
-<body>
-  <div class="lines position-fixed">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
-
-  <header class="fixed-top">
-    <nav class="navbar navbar-expand-sm pt-3">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#home">HUN REACH BORIN</a>
-        <button class="navbar-toggler d-lg-none bg-transparent" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-          <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#home" aria-current="page">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#skills">Skills</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li>
-          </ul>
-          <!-- <button
+    <header class="fixed-top">
+      <nav class="navbar navbar-expand-sm pt-3">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#home">HUN REACH BORIN</a>
+          <button
+            class="navbar-toggler d-lg-none bg-transparent"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="#home" aria-current="page">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#portfolio">Portfolio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#services">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#skills">Skills</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+            </ul>
+            <!-- <button
               class="btn bg-transparent border-0 fs-5"
               type="button"
               data-theme-toggle
@@ -411,1016 +398,1574 @@
             >
               <i class="fa-regular fa-sun"></i>
             </button> -->
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section id="home" class="section-full d-flex align-items-center">
-      <div class="container">
-        <div class="row align-items-center">
-          <!-- Left: Text -->
-          <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
-            <h1 class="display-4">
-              I'm a <span class="auto-type" aria-hidden="true"></span>
-            </h1>
-            <p class="lead">
-              A Shopify Theme Developer who bridges the gap between creative design and technical execution. I build
-              clean, minimalist custom themes that are as beautiful as they are functional—focusing on speed, clarity,
-              and a seamless user experience.
-            </p>
-            <div class="mt-4">
-              <a href="#portfolio" class="btn btn-glass btn-glass--primary me-2">View Projects</a>
-              <a href="./assets/Hun Reach Borin Resume.pdf" class="btn btn-glass btn-glass--muted" download>Download CV</a>
-            </div>
-            <!-- Social icons (glass) - moved here from Contact -->
-            <div class="mt-4 d-flex justify-content-lg-start justify-content-center">
-              <div class="social-icons d-flex flex-wrap gap-3">
-                <a href="https://github.com/reachBorinhun" class="social-link" aria-label="GitHub" title="GitHub">
-                  <i class="fab fa-github fa-lg" aria-hidden="true"></i>
-                </a>
-                <a href="#" class="social-link" aria-label="Telegram" title="Telegram">
-                  <i class="fab fa-telegram-plane fa-lg" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.tiktok.com/@binnnnn1110?_r=1&_t=ZS-91V84u2WqsC" class="social-link"
-                  aria-label="TikTok" title="TikTok">
-                  <i class="fab fa-tiktok fa-lg" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.facebook.com/share/1A9qHEJCJL/?mibextid=wwXIfr" class="social-link"
-                  aria-label="Facebook" title="Facebook">
-                  <i class="fab fa-facebook-f fa-lg" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/reach-borin-hun/" class="social-link" aria-label="LinkedIn"
-                  title="LinkedIn">
-                  <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Image -->
-          <div class="col-lg-6 text-center">
-            <img src="./assets/img/pf-img.png" alt="Illustration representing a developer at work"
-              class="img-fluid rounded shadow-sm mx-auto d-block" style="max-height: 640px; width: auto" />
           </div>
         </div>
-      </div>
-    </section>
+      </nav>
+    </header>
 
-    <!-- About Section with Glassmorphism -->
-    <section id="about" class="d-flex align-items-center justify-content-center section-full">
-      <div class="container">
-        <h2 class="about-main-title text-center mb-4">About</h2>
-        <div class="row g-4">
-          <!-- Left Column: Experience (mirrors Right column card style) -->
-          <div class="col-12 col-md-6">
-            <h3 class="about-section-title mb-3">Experience</h3>
-
-            <!-- Experience Accordion -->
-            <div id="experienceAccordion" class="accordion">
-              <!-- Experience Item 1 -->
-              <div class="about-glass-card mb-3 experience-accordion-card">
-                <button class="education-accordion-btn w-100 text-start border-0 bg-transparent" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#experience1" aria-expanded="false"
-                  aria-controls="experience1">
-                  <div class="d-flex align-items-start">
-                    <div class="education-logo-wrapper me-3 flex-shrink-0">
-                      <img src="./assets/img/TVK.png" alt="Company Logo" class="education-logo" />
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="d-flex align-items-start gap-2 mb-2">
-                        <span class="education-dot"></span>
-                        <span class="education-text">Web Design for Staffs Management</span>
-                      </div>
-                      <small class="text-muted d-block ms-3">2024–Present</small>
-                    </div>
-                    <div class="education-toggle-icon ms-2 flex-shrink-0">
-                      <i class="fas fa-chevron-down"></i>
-                    </div>
-                  </div>
-                </button>
-
-                <div class="collapse" id="experience1" data-bs-parent="#experienceAccordion">
-                  <div class="education-accordion-content mt-3 pt-3">
-                    <p class="education-extra-text mb-3">
-                      Built performant, accessible interfaces for e-commerce
-                      clients. Focused on modular component design,
-                      lazy-loading assets, and integrating storefront APIs.
-                    </p>
-                    <div class="education-pills d-flex flex-wrap gap-2">
-                      <span class="education-pill"><i class="education-pill-icon fab fa-js" aria-hidden="true"></i><span
-                          class="education-pill-label">JS</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-figma"
-                          aria-hidden="true"></i><span class="education-pill-label">FIGMA</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-github"
-                          aria-hidden="true"></i><span class="education-pill-label">Git hub</span></span>
-                      <span class="education-pill"><span class="education-pill-label">VERCEL</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-bootstrap"
-                          aria-hidden="true"></i><span class="education-pill-label">BOOTSTRAP</span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Stacked Glass Cards -->
-          <div class="col-12 col-md-6">
-            <!-- Education Section Heading -->
-            <h3 class="about-section-title mb-3">Education</h3>
-
-            <!-- Education Accordion (only one open at a time) -->
-            <div id="educationAccordion" class="accordion">
-              <!-- Education Card 1 - Accordion -->
-              <div class="about-glass-card mb-3 education-accordion-card">
-                <!-- Accordion Header (Always Visible) -->
-                <button class="education-accordion-btn w-100 text-start border-0 bg-transparent" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#education1" aria-expanded="false"
-                  aria-controls="education1">
-                  <div class="d-flex align-items-start">
-                    <div class="education-logo-wrapper me-3 flex-shrink-0">
-                      <img src="./assets/img/rupp_logo.png" alt="RUPP Logo" class="education-logo" />
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="d-flex align-items-start gap-2 mb-2">
-                        <span class="education-dot"></span>
-                        <span class="education-text">Computer Science Degree — Royal University of Phnom
-                          Penh (RUPP)</span>
-                      </div>
-                      <small class="text-muted d-block ms-3">2023 – Present</small>
-                    </div>
-                    <div class="education-toggle-icon ms-2 flex-shrink-0">
-                      <i class="fas fa-chevron-down"></i>
-                    </div>
-                  </div>
-                </button>
-
-                <!-- Accordion Collapse Content -->
-                <div class="collapse" id="education1" data-bs-parent="#educationAccordion">
-                  <div class="education-accordion-content mt-3 pt-3">
-                    <p class="education-extra-text mb-3">
-                      <!-- Add your extra text here -->
-                      Studied fundamental computer science concepts,
-                      algorithms, data structures, and software engineering
-                      principles. Gained expertise in programming languages,
-                      database management, and web technologies.
-                    </p>
-                    <div class="education-pills d-flex flex-wrap gap-2">
-                      <span class="education-pill"><i class="education-pill-icon fab fa-js" aria-hidden="true"></i><span
-                          class="education-pill-label">JS</span></span>
-                      <span class="education-pill"><span class="education-pill-label">C#</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-php"
-                          aria-hidden="true"></i><span class="education-pill-label">PHP</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fas fa-database"
-                          aria-hidden="true"></i><span class="education-pill-label">MySQL</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-java"
-                          aria-hidden="true"></i><span class="education-pill-label">JAVA</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-figma"
-                          aria-hidden="true"></i><span class="education-pill-label">FIGMA</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-github"
-                          aria-hidden="true"></i><span class="education-pill-label">Git hub</span></span>
-                      <span class="education-pill"><span class="education-pill-label">VERCEL</span></span>
-                      <span class="education-pill"><span class="education-pill-label">TAILWIND</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-bootstrap"
-                          aria-hidden="true"></i><span class="education-pill-label">BOOTSTRAP</span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Education Card 2 - Accordion -->
-              <div class="about-glass-card mb-4 education-accordion-card">
-                <!-- Accordion Header (Always Visible) -->
-                <button class="education-accordion-btn w-100 text-start border-0 bg-transparent" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#education2" aria-expanded="false"
-                  aria-controls="education2">
-                  <div class="d-flex align-items-start">
-                    <div class="education-logo-wrapper me-3 flex-shrink-0">
-                      <img src="./assets/img/ANT.png" alt="ANT Technology Logo" class="education-logo" />
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="d-flex align-items-start gap-2 mb-2">
-                        <span class="education-dot"></span>
-                        <span class="education-text">Web Developer Certification — ANT Technology
-                          Training Center</span>
-                      </div>
-                      <small class="text-muted d-block ms-3">2025 – Present</small>
-                    </div>
-                    <div class="education-toggle-icon ms-2 flex-shrink-0">
-                      <i class="fas fa-chevron-down"></i>
-                    </div>
-                  </div>
-                </button>
-
-                <!-- Accordion Collapse Content -->
-                <div class="collapse" id="education2" data-bs-parent="#educationAccordion">
-                  <div class="education-accordion-content mt-3 pt-3">
-                    <p class="education-extra-text mb-3">
-                      <!-- Add your extra text here -->
-                      Comprehensive web development training covering modern
-                      front-end and back-end technologies. Focused on building
-                      responsive, performant web applications using industry
-                      best practices.
-                    </p>
-                    <div class="education-pills d-flex flex-wrap gap-2">
-                      <span class="education-pill"><i class="education-pill-icon fab fa-js" aria-hidden="true"></i><span
-                          class="education-pill-label">JS</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-node-js"
-                          aria-hidden="true"></i><span class="education-pill-label">node.js</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-vuejs"
-                          aria-hidden="true"></i><span class="education-pill-label">VUE</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fas fa-database"
-                          aria-hidden="true"></i><span class="education-pill-label">MySQL</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-figma"
-                          aria-hidden="true"></i><span class="education-pill-label">FIGMA</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-github"
-                          aria-hidden="true"></i><span class="education-pill-label">Git hub</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-npm"
-                          aria-hidden="true"></i><span class="education-pill-label">NPM</span></span>
-                      <span class="education-pill"><span class="education-pill-label">VERCEL</span></span>
-                      <span class="education-pill"><i class="education-pill-icon fab fa-bootstrap"
-                          aria-hidden="true"></i><span class="education-pill-label">BOOTSTRAP</span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /#educationAccordion -->
-
-            <!-- Philosophy Card -->
-            <div class="about-glass-card mb-3">
-              <h3 class="about-section-title mb-3">Philosophy</h3>
-              <p class="about-philosophy-text">
-                "I believe great code is invisible to users — fast, reliable,
-                and frictionless. I optimize not just for performance, but for
-                human experience."
+    <main>
+      <section id="home" class="section-full d-flex align-items-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Left: Text -->
+            <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+              <h1 class="display-4">
+                I'm a <span class="auto-type" aria-hidden="true"></span>
+              </h1>
+              <p class="lead">
+                A front-end developer with a passion for clean code and
+                minimalist design. I build beautiful, intuitive, and
+                user-centered web experiences. I focus on clarity, performance,
+                and accessibility.
               </p>
+              <div class="mt-4">
+                <a
+                  href="#portfolio"
+                  class="btn btn-glass btn-glass--primary me-2"
+                  >View Projects</a
+                >
+                <a href="#contact" class="btn btn-glass btn-glass--muted"
+                  >Contact</a
+                >
+              </div>
+              <!-- Social icons (glass) - moved here from Contact -->
+              <div
+                class="mt-4 d-flex justify-content-lg-start justify-content-center"
+              >
+                <div class="social-icons d-flex flex-wrap gap-3">
+                  <a
+                    href="https://github.com/reachBorinhun"
+                    class="social-link"
+                    aria-label="GitHub"
+                    title="GitHub"
+                  >
+                    <i class="fab fa-github fa-lg" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="social-link"
+                    aria-label="Telegram"
+                    title="Telegram"
+                  >
+                    <i
+                      class="fab fa-telegram-plane fa-lg"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@binnnnn1110?_r=1&_t=ZS-91V84u2WqsC"
+                    class="social-link"
+                    aria-label="TikTok"
+                    title="TikTok"
+                  >
+                    <i class="fab fa-tiktok fa-lg" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/share/1A9qHEJCJL/?mibextid=wwXIfr"
+                    class="social-link"
+                    aria-label="Facebook"
+                    title="Facebook"
+                  >
+                    <i class="fab fa-facebook-f fa-lg" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/reach-borin-hun/"
+                    class="social-link"
+                    aria-label="LinkedIn"
+                    title="LinkedIn"
+                  >
+                    <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
             </div>
 
-            <!-- CTA Card -->
-            <div class="about-glass-card">
-              <div class="text-center">
-                <a href="#contact" class="btn btn-about-cta px-4 py-2 fw-medium">Let's Work Together →</a>
+            <!-- Right: Image -->
+            <div class="col-lg-6 text-center">
+              <img
+                src="./assets/img/pf-img.png"
+                alt="Illustration representing a developer at work"
+                class="img-fluid rounded shadow-sm mx-auto d-block"
+                style="max-height: 640px; width: auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section with Glassmorphism -->
+      <section
+        id="about"
+        class="d-flex align-items-center justify-content-center section-full"
+      >
+        <div class="container">
+          <h2 class="about-main-title text-center mb-4">About</h2>
+          <div class="row g-4">
+            <!-- Left Column: Experience (mirrors Right column card style) -->
+            <div class="col-12 col-md-6">
+              <h3 class="about-section-title mb-3">Experience</h3>
+
+              <!-- Experience Accordion -->
+              <div id="experienceAccordion" class="accordion">
+                <!-- Experience Item 1 -->
+                <div class="about-glass-card mb-3 experience-accordion-card">
+                  <button
+                    class="education-accordion-btn w-100 text-start border-0 bg-transparent"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#experience1"
+                    aria-expanded="false"
+                    aria-controls="experience1"
+                  >
+                    <div class="d-flex align-items-start">
+                      <div class="education-logo-wrapper me-3 flex-shrink-0">
+                        <img
+                          src="./assets/img/TVK.png"
+                          alt="Company Logo"
+                          class="education-logo"
+                        />
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-start gap-2 mb-2">
+                          <span class="education-dot"></span>
+                          <span class="education-text"
+                            >Front-end Developer — Acme Co.</span
+                          >
+                        </div>
+                        <small class="text-muted d-block ms-3"
+                          >2024–Present</small
+                        >
+                      </div>
+                      <div class="education-toggle-icon ms-2 flex-shrink-0">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </button>
+
+                  <div
+                    class="collapse"
+                    id="experience1"
+                    data-bs-parent="#experienceAccordion"
+                  >
+                    <div class="education-accordion-content mt-3 pt-3">
+                      <p class="education-extra-text mb-3">
+                        Built performant, accessible interfaces for e-commerce
+                        clients. Focused on modular component design,
+                        lazy-loading assets, and integrating storefront APIs.
+                      </p>
+                      <div class="education-pills d-flex flex-wrap gap-2">
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-js"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">JS</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-figma"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">FIGMA</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-github"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >Git hub</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><span class="education-pill-label"
+                            >VERCEL</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-bootstrap"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >BOOTSTRAP</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Stacked Glass Cards -->
+            <div class="col-12 col-md-6">
+              <!-- Education Section Heading -->
+              <h3 class="about-section-title mb-3">Education</h3>
+
+              <!-- Education Accordion (only one open at a time) -->
+              <div id="educationAccordion" class="accordion">
+                <!-- Education Card 1 - Accordion -->
+                <div class="about-glass-card mb-3 education-accordion-card">
+                  <!-- Accordion Header (Always Visible) -->
+                  <button
+                    class="education-accordion-btn w-100 text-start border-0 bg-transparent"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#education1"
+                    aria-expanded="false"
+                    aria-controls="education1"
+                  >
+                    <div class="d-flex align-items-start">
+                      <div class="education-logo-wrapper me-3 flex-shrink-0">
+                        <img
+                          src="./assets/img/rupp_logo.png"
+                          alt="RUPP Logo"
+                          class="education-logo"
+                        />
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-start gap-2 mb-2">
+                          <span class="education-dot"></span>
+                          <span class="education-text"
+                            >Computer Science Degree — Royal University of Phnom
+                            Penh (RUPP)</span
+                          >
+                        </div>
+                        <small class="text-muted d-block ms-3"
+                          >2023 – Present</small
+                        >
+                      </div>
+                      <div class="education-toggle-icon ms-2 flex-shrink-0">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </button>
+
+                  <!-- Accordion Collapse Content -->
+                  <div
+                    class="collapse"
+                    id="education1"
+                    data-bs-parent="#educationAccordion"
+                  >
+                    <div class="education-accordion-content mt-3 pt-3">
+                      <p class="education-extra-text mb-3">
+                        <!-- Add your extra text here -->
+                        Studied fundamental computer science concepts,
+                        algorithms, data structures, and software engineering
+                        principles. Gained expertise in programming languages,
+                        database management, and web technologies.
+                      </p>
+                      <div class="education-pills d-flex flex-wrap gap-2">
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-js"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">JS</span></span
+                        >
+                        <span class="education-pill"
+                          ><span class="education-pill-label">C#</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-php"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">PHP</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fas fa-database"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">MySQL</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-java"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">JAVA</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-figma"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">FIGMA</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-github"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >Git hub</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><span class="education-pill-label"
+                            >VERCEL</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><span class="education-pill-label"
+                            >TAILWIND</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-bootstrap"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >BOOTSTRAP</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Education Card 2 - Accordion -->
+                <div class="about-glass-card mb-4 education-accordion-card">
+                  <!-- Accordion Header (Always Visible) -->
+                  <button
+                    class="education-accordion-btn w-100 text-start border-0 bg-transparent"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#education2"
+                    aria-expanded="false"
+                    aria-controls="education2"
+                  >
+                    <div class="d-flex align-items-start">
+                      <div class="education-logo-wrapper me-3 flex-shrink-0">
+                        <img
+                          src="./assets/img/ANT.png"
+                          alt="ANT Technology Logo"
+                          class="education-logo"
+                        />
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-start gap-2 mb-2">
+                          <span class="education-dot"></span>
+                          <span class="education-text"
+                            >Web Developer Certification — ANT Technology
+                            Training Center</span
+                          >
+                        </div>
+                        <small class="text-muted d-block ms-3"
+                          >2025 – Present</small
+                        >
+                      </div>
+                      <div class="education-toggle-icon ms-2 flex-shrink-0">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </button>
+
+                  <!-- Accordion Collapse Content -->
+                  <div
+                    class="collapse"
+                    id="education2"
+                    data-bs-parent="#educationAccordion"
+                  >
+                    <div class="education-accordion-content mt-3 pt-3">
+                      <p class="education-extra-text mb-3">
+                        <!-- Add your extra text here -->
+                        Comprehensive web development training covering modern
+                        front-end and back-end technologies. Focused on building
+                        responsive, performant web applications using industry
+                        best practices.
+                      </p>
+                      <div class="education-pills d-flex flex-wrap gap-2">
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-js"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">JS</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-node-js"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >node.js</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-vuejs"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">VUE</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fas fa-database"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">MySQL</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-figma"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">FIGMA</span></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-github"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >Git hub</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-npm"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label">NPM</span></span
+                        >
+                        <span class="education-pill"
+                          ><span class="education-pill-label"
+                            >VERCEL</span
+                          ></span
+                        >
+                        <span class="education-pill"
+                          ><i
+                            class="education-pill-icon fab fa-bootstrap"
+                            aria-hidden="true"
+                          ></i
+                          ><span class="education-pill-label"
+                            >BOOTSTRAP</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /#educationAccordion -->
+
+              <!-- Philosophy Card -->
+              <div class="about-glass-card mb-3">
+                <h3 class="about-section-title mb-3">Philosophy</h3>
+                <p class="about-philosophy-text">
+                  "I believe great code is invisible to users — fast, reliable,
+                  and frictionless. I optimize not just for performance, but for
+                  human experience."
+                </p>
+              </div>
+
+              <!-- CTA Card -->
+              <div class="about-glass-card">
+                <div class="text-center">
+                  <a
+                    href="#contact"
+                    class="btn btn-about-cta px-4 py-2 fw-medium"
+                    >Let's Work Together →</a
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- Restored Skills section -->
-    <section id="portfolio" class="portfolio-hero section-full d-flex align-items-center justify-content-center">
-      <div class="container">
-        <div class="portfolio-header w-100">
-          <h2 class="display-5 text-center mb-3">My Projects</h2>
+      </section>
+      <!-- Restored Skills section -->
+      <section
+        id="portfolio"
+        class="portfolio-hero section-full d-flex align-items-center justify-content-center"
+      >
+        <div class="container">
+          <div class="portfolio-header w-100">
+            <h2 class="display-5 text-center mb-3">My Projects</h2>
+          </div>
+
+          <div class="row g-4 justify-content-center portfolio-grid">
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="portfolio-card mx-auto">
+                <img
+                  src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg"
+                  alt="Showcase"
+                  class="card-img-main"
+                />
+
+                <div class="portfolio-tags">
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-html5"></i> HTML</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-css3-alt"></i> CSS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-js"></i> JS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-bootstrap"></i> Bootstrap</span
+                  >
+                </div>
+
+                <div class="portfolio-title">
+                  <div class="portfolio-type portfolio-type--webdesign">
+                    <i class="fa-solid fa-palette" aria-hidden="true"></i>Web
+                    Design
+                  </div>
+                  <h2>TVK</h2>
+                  <p class="portfolio-desc">
+                    Staff management interface and admin dashboard — clean UI
+                    and responsive layout.
+                  </p>
+                </div>
+
+                <div class="portfolio-cta-wrap">
+                  <a
+                    href="https://tvk-management.vercel.app/"
+                    class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View demo project</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="portfolio-card mx-auto">
+                <img
+                  src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg"
+                  alt="Showcase"
+                  class="card-img-main"
+                />
+
+                <div class="portfolio-tags">
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-html5"></i> HTML</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-css3-alt"></i> CSS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-js"></i> JS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-bootstrap"></i> Bootstrap</span
+                  >
+                </div>
+
+                <div class="portfolio-title">
+                  <div class="portfolio-type portfolio-type--community">
+                    <i class="fa-solid fa-users" aria-hidden="true"></i
+                    >Community
+                  </div>
+                  <h2>Future Tech</h2>
+                  <p class="portfolio-desc">
+                    Community hub and event landing — I worked on layout and
+                    membership UI.
+                  </p>
+                </div>
+
+                <div class="portfolio-cta-wrap">
+                  <a
+                    href="https://future-tech-pro.vercel.app/"
+                    class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View demo project</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="portfolio-card mx-auto">
+                <img
+                  src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg"
+                  alt="Showcase"
+                  class="card-img-main"
+                />
+
+                <div class="portfolio-tags">
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-html5"></i> HTML</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-css3-alt"></i> CSS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-js"></i> JS</span
+                  >
+                  <span class="tag-pill"
+                    ><i class="fa-brands fa-bootstrap"></i> Bootstrap</span
+                  >
+                </div>
+
+                <div class="portfolio-title">
+                  <div class="portfolio-type portfolio-type--ecommerce">
+                    <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i
+                    >E‑commerce
+                  </div>
+                  <h2>Noneyaa Store</h2>
+                  <p class="portfolio-desc">
+                    Shopfront design and prototyping for a modern product
+                    showcase.
+                  </p>
+                </div>
+
+                <div class="portfolio-cta-wrap">
+                  <a
+                    href="https://thenoneyaastore.vercel.app/"
+                    class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View demo project</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+      <section id="skills" class="section-full d-flex align-items-center">
+        <div class="container">
+          <h2 class="display-5 text-center mb-5">Skills</h2>
 
-        <div class="row g-4 justify-content-center portfolio-grid">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="portfolio-card mx-auto">
-              <img src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg" alt="Showcase"
-                class="card-img-main" />
-
-              <div class="portfolio-tags">
-                <span class="tag-pill"><i class="fa-brands fa-html5"></i> HTML</span>
-                <span class="tag-pill"><i class="fa-brands fa-css3-alt"></i> CSS</span>
-                <span class="tag-pill"><i class="fa-brands fa-js"></i> JS</span>
-                <span class="tag-pill"><i class="fa-brands fa-bootstrap"></i> Bootstrap</span>
-                <span class="tag-pill"><i class="fa-brands fa-github"></i> GitHub</span>
-                <span class="tag-pill"><i class="fa-brands fa-figma"></i> Figma</span>
-              </div>
-
-              <div class="portfolio-title">
-                <div class="portfolio-type portfolio-type--webdesign">
-                  <i class="fa-solid fa-palette" aria-hidden="true"></i>Web
-                  Design
-                </div>
-                <h2>TVK</h2>
-                <p class="portfolio-desc">
-                  Staff management interface and admin dashboard — clean UI
-                  and responsive layout.
-                </p>
-              </div>
-
-              <div class="portfolio-cta-wrap">
-                <a href="https://tvk-management.vercel.app/"
-                  class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left" target="_blank"
-                  rel="noopener noreferrer">View demo project</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="portfolio-card mx-auto">
-              <img src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg" alt="Showcase"
-                class="card-img-main" />
-
-              <div class="portfolio-tags">
-                <span class="tag-pill"><i class="fa-brands fa-html5"></i> HTML</span>
-                <span class="tag-pill"><i class="fa-brands fa-css3-alt"></i> CSS</span>
-                <span class="tag-pill"><i class="fa-brands fa-js"></i> JS</span>
-                <span class="tag-pill"><i class="fa-brands fa-bootstrap"></i> Bootstrap</span>
-                <span class="tag-pill"><i class="fa-brands fa-github"></i> GitHub</span>
-                <span class="tag-pill"><i class="fa-brands fa-figma"></i> Figma</span>
-              </div>
-
-              <div class="portfolio-title">
-                <div class="portfolio-type portfolio-type--community">
-                  <i class="fa-solid fa-users" aria-hidden="true"></i>Community
-                </div>
-                <h2>Future Tech</h2>
-                <p class="portfolio-desc">
-                  Community hub and event landing — I worked on layout and
-                  membership UI.
-                </p>
-              </div>
-
-              <div class="portfolio-cta-wrap">
-                <a href="https://future-tech-pro.vercel.app/"
-                  class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left" target="_blank"
-                  rel="noopener noreferrer">View demo project</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="portfolio-card mx-auto">
-              <img src="https://i.pinimg.com/1200x/57/2b/f5/572bf542773c836cad9f54c681c92ec2.jpg" alt="Showcase"
-                class="card-img-main" />
-
-              <div class="portfolio-tags">
-                <span class="tag-pill"><i class="fa-brands fa-html5"></i> HTML</span>
-                <span class="tag-pill"><i class="fa-brands fa-css3-alt"></i> CSS</span>
-                <span class="tag-pill"><i class="fa-brands fa-js"></i> JS</span>
-                <span class="tag-pill"><i class="fa-brands fa-bootstrap"></i> Bootstrap</span>
-                <span class="tag-pill"><i class="fa-brands fa-github"></i> GitHub</span>
-                <span class="tag-pill"><i class="fa-brands fa-figma"></i> Figma</span>
-              </div>
-
-              <div class="portfolio-title">
-                <div class="portfolio-type portfolio-type--ecommerce">
-                  <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>E‑commerce
-                </div>
-                <h2>Noneyaa Store</h2>
-                <p class="portfolio-desc">
-                  Shopfront design and prototyping for a modern product
-                  showcase.
-                </p>
-              </div>
-
-              <div class="portfolio-cta-wrap">
-                <a href="https://thenoneyaastore.vercel.app/"
-                  class="btn btn-glass btn-glass--muted portfolio-demo portfolio-demo-left" target="_blank"
-                  rel="noopener noreferrer">View demo project</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="skills" class="section-full d-flex align-items-center">
-      <div class="container">
-        <h2 class="display-5 text-center mb-5">Skills</h2>
-
-        <!-- Two-column layout: large primary card left, three stacked cards right (reference layout) -->
-        <div class="row g-4 skills-layout">
-          <!-- Left: Primary (big card) - simplified (no large icon) -->
-          <div class="col-12 col-lg-7">
-            <div class="about-glass-card skill-card skill-card--primary" role="group"
-              aria-labelledby="skill-primary-title">
-              <div class="d-flex flex-column align-items-center">
-                <h3 id="skill-primary-title" class="skill-title">Primary</h3>
-                <p class="skill-desc">
-                  Front-end, theming and component work I use every day
-                </p>
-                <div class="skill-tile-grid mt-3">
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:html-5" data-inline="false"></span>
-                    <span class="tile-label">HTML5</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:css-3" data-inline="false"></span>
-                    <span class="tile-label">CSS3</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:javascript" data-inline="false"></span>
-                    <span class="tile-label">JavaScript</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:vue" data-inline="false"></span>
-                    <span class="tile-label">Vue</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="fa-brands:github" data-inline="false"></span>
-                    <span class="tile-label">GitHub</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="material-icon-theme:liquid" data-inline="false"></span>
-                    <span class="tile-label">Liquid</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:tailwindcss" data-inline="false"></span>
-                    <span class="tile-label">Tailwind</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:bootstrap" data-inline="false"></span>
-                    <span class="tile-label">Bootstrap</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="simple-icons:figma" data-inline="false"></span>
-                    <span class="tile-label">Figma</span>
-                  </div>
-                  <div class="skill-tile">
-                    <span class="iconify" data-icon="logos:shopify" data-inline="false"></span>
-                    <span class="tile-label">Shopify</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: stacked three cards -->
-          <div class="col-12 col-lg-5">
-            <div class="d-flex flex-column h-100 gap-3">
-              <!-- Deployment card (Vercel / Netlify / GitHub) -->
-              <div class="about-glass-card skill-card skill-card--stack" role="group"
-                aria-labelledby="skill-deploy-title">
+          <!-- Two-column layout: large primary card left, three stacked cards right (reference layout) -->
+          <div class="row g-4 skills-layout">
+            <!-- Left: Primary (big card) - simplified (no large icon) -->
+            <div class="col-12 col-lg-7">
+              <div
+                class="about-glass-card skill-card skill-card--primary"
+                role="group"
+                aria-labelledby="skill-primary-title"
+              >
                 <div class="d-flex flex-column align-items-center">
-                  <h4 id="skill-deploy-title" class="skill-title">
-                    Deployment
-                  </h4>
-                  <div class="skill-tile-grid mt-3 w-100">
+                  <h3 id="skill-primary-title" class="skill-title">Primary</h3>
+                  <p class="skill-desc">
+                    Front-end, theming and component work I use every day
+                  </p>
+                  <div class="skill-tile-grid mt-3">
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="logos:vercel" data-inline="false"></span>
-                      <span class="tile-label">Vercel</span>
+                      <span
+                        class="iconify"
+                        data-icon="logos:html-5"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">HTML5</span>
                     </div>
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="logos:netlify" data-inline="false"></span>
-                      <span class="tile-label">Netlify</span>
+                      <span
+                        class="iconify"
+                        data-icon="logos:css-3"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">CSS3</span>
                     </div>
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="fa-brands:github" data-inline="false"></span>
+                      <span
+                        class="iconify"
+                        data-icon="logos:javascript"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">JavaScript</span>
+                    </div>
+                    <div class="skill-tile">
+                      <span
+                        class="iconify"
+                        data-icon="logos:vue"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">Vue</span>
+                    </div>
+                    <div class="skill-tile">
+                      <span
+                        class="iconify"
+                        data-icon="fa-brands:github"
+                        data-inline="false"
+                      ></span>
                       <span class="tile-label">GitHub</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Assistant card (AI assistants: Gemini / ChatGPT / Claude) -->
-              <div class="about-glass-card skill-card skill-card--stack" role="group"
-                aria-labelledby="skill-assistant-title">
-                <div class="d-flex flex-column align-items-center">
-                  <h4 id="skill-assistant-title" class="skill-title">
-                    Assistant
-                  </h4>
-                  <div class="skill-tile-grid mt-3 w-100">
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="mdi:robot" data-inline="false"></span>
-                      <span class="tile-label">Gemini</span>
-                    </div>
-                    <div class="skill-tile">
-                      <span class="iconify" data-icon="simple-icons:openai" data-inline="false"></span>
-                      <span class="tile-label">ChatGPT</span>
-                    </div>
-                    <div class="skill-tile">
-                      <span class="iconify" data-icon="simple-icons:anthropic" data-inline="false"></span>
-                      <span class="tile-label">Claude</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Shopify Themes card (three-tile grid: Liquid, Shopify, storefront basics) -->
-              <div class="about-glass-card skill-card skill-card--stack" role="group"
-                aria-labelledby="skill-shop-title">
-                <div class="d-flex flex-column align-items-center">
-                  <h4 id="skill-shop-title" class="skill-title">
-                    Shopify Themes
-                  </h4>
-                  <div class="skill-tile-grid mt-3 w-100">
-                    <div class="skill-tile">
-                      <span class="iconify" data-icon="material-icon-theme:liquid" data-inline="false"></span>
+                      <span
+                        class="iconify"
+                        data-icon="material-icon-theme:liquid"
+                        data-inline="false"
+                      ></span>
                       <span class="tile-label">Liquid</span>
                     </div>
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="logos:shopify" data-inline="false"></span>
-                      <span class="tile-label">Shopify</span>
+                      <span
+                        class="iconify"
+                        data-icon="logos:tailwindcss"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">Tailwind</span>
                     </div>
                     <div class="skill-tile">
-                      <span class="iconify" data-icon="logos:bootstrap" data-inline="false"></span>
+                      <span
+                        class="iconify"
+                        data-icon="logos:bootstrap"
+                        data-inline="false"
+                      ></span>
                       <span class="tile-label">Bootstrap</span>
                     </div>
+                    <div class="skill-tile">
+                      <span
+                        class="iconify"
+                        data-icon="simple-icons:figma"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">Figma</span>
+                    </div>
+                    <div class="skill-tile">
+                      <span
+                        class="iconify"
+                        data-icon="logos:shopify"
+                        data-inline="false"
+                      ></span>
+                      <span class="tile-label">Shopify</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="services" class="section-full d-flex align-items-center justify-content-center">
-      <div class="container">
-        <h2 class="display-5 text-center mb-5">Services</h2>
 
-        <!-- 3-column gradient glass cards on md+, stacks to 1 column on mobile -->
-        <div class="row gy-4">
-          <div class="col-12 col-md-4 card-wrap">
-            <article class="gradient-card" role="article" aria-labelledby="svc-web-design">
-              <div class="card-inner">
-                <div class="service-head">
-                  <div class="service-icon">🎨</div>
-                  <div>
-                    <h3 id="svc-web-design" class="service-title">
-                      Web Design
-                    </h3>
-                  </div>
-                </div>
-
-                <div class="service-sub">
-                  Figma design &amp; coded mockups
-                </div>
-
-                <p class="service-desc">
-                  I design in Figma and build coded HTML/CSS/JS prototypes for
-                  preview and testing.
-                </p>
-
-                <div class="education-pills mt-3">
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:figma" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Figma</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:html5" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">HTML5</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:css3" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">CSS3</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:javascript" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">JavaScript</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:bootstrap" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Bootstrap</span>
-                  </span>
-                  <span class="education-pill">
-                    <i class="education-pill-icon fab fa-vuejs" aria-hidden="true"></i>
-                    <span class="education-pill-label">VUE</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:tailwindcss" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Tailwind</span>
-                  </span>
-                </div>
-                <hr class="my-4" />
-                <ul class="service-benefits mt-2">
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Developer Handoff Ready
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Accessible
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Scalable
-                  </li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-12 col-md-4 card-wrap">
-            <article class="gradient-card gradient-card--accent" role="article" aria-labelledby="svc-shopify">
-              <div class="card-inner">
-                <div class="service-head">
-                  <div class="service-icon" aria-hidden="true">
-                    <span class="iconify shopify-brand" data-icon="simple-icons:shopify" data-inline="false"
-                      style="color: #96bf48"></span>
-                  </div>
-                  <div>
-                    <h3 id="svc-shopify" class="service-title">
-                      Shopify Themes Design & Development
-                    </h3>
-                  </div>
-                </div>
-
-                <div class="service-sub">From Figma concept to live Shopify theme</div>
-
-                <p class="service-desc">
-                  Design and build custom, conversion-focused Shopify themes
-                  tailored to your store.
-                </p>
-
-                <div class="education-pills mt-3">
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify shopify-brand" data-icon="simple-icons:shopify" data-inline="false"
-                        style="color: #96bf48"></span>
-                    </span>
-                    <span class="education-pill-label">Shopify</span>
-                  </span>
-                  <span class="education-pill"><span class="education-pill-icon"><span class="iconify"
-                        data-icon="material-icon-theme:liquid" data-inline="false"></span></span><span
-                      class="education-pill-label">Liquid </span></span>
-                  <span class="education-pill"><span class="education-pill-icon"><span class="iconify"
-                        data-icon="simple-icons:javascript" data-inline="false"></span></span><span
-                      class="education-pill-label">JavaScript</span></span>
-                  <span class="education-pill"><span class="education-pill-icon"><span class="iconify"
-                        data-icon="simple-icons:figma" data-inline="false"></span></span><span
-                      class="education-pill-label">Figma</span></span>
-                  <span class="education-pill"><span class="education-pill-icon"><span class="iconify"
-                        data-icon="simple-icons:html5" data-inline="false"></span></span><span
-                      class="education-pill-label">HTML5</span></span>
-                  <span class="education-pill"><span class="education-pill-icon"><span class="iconify"
-                        data-icon="simple-icons:bootstrap" data-inline="false"></span></span><span
-                      class="education-pill-label">Bootstrap</span></span>
-                </div>
-                <hr class="my-4+3" />
-                <ul class="service-benefits mt-2">
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Mobile-Optimized
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Easy to Maintain
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    SEO-Friendly
-                  </li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-12 col-md-4 card-wrap">
-            <article class="gradient-card" role="article" aria-labelledby="svc-frontend">
-              <div class="card-inner">
-                <div class="service-head">
-                  <div class="service-icon">👨‍💻</div>
-                  <div>
-                    <h3 id="svc-frontend" class="service-title">
-                      Front-End Dev
-                    </h3>
-                    <div class="service-sub">
-                      Front-end &amp; API integration
+            <!-- Right: stacked three cards -->
+            <div class="col-12 col-lg-5">
+              <div class="d-flex flex-column h-100 gap-3">
+                <!-- Deployment card (Vercel / Netlify / GitHub) -->
+                <div
+                  class="about-glass-card skill-card skill-card--stack"
+                  role="group"
+                  aria-labelledby="skill-deploy-title"
+                >
+                  <div class="d-flex flex-column align-items-center">
+                    <h4 id="skill-deploy-title" class="skill-title">
+                      Deployment
+                    </h4>
+                    <div class="skill-tile-grid mt-3 w-100">
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="logos:vercel"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Vercel</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="logos:netlify"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Netlify</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="fa-brands:github"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">GitHub</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <p class="service-desc">
-                  Build responsive front-ends and connect APIs; endpoints
-                  tested with Postman.
-                </p>
-
-                <div class="education-pills mt-3">
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:html5" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">HTML5</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:css3" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">CSS3</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:javascript" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">JavaScript</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <i class="education-pill-icon fab fa-vuejs" aria-hidden="true"></i>
-                    <span class="education-pill-label">VUE</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:tailwindcss" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Tailwind</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:bootstrap" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Bootstrap</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-label">VERCEL</span>
-                  </span>
-
-                  <span class="education-pill">
-                    <span class="education-pill-icon">
-                      <span class="iconify" data-icon="simple-icons:postman" data-inline="false"></span>
-                    </span>
-                    <span class="education-pill-label">Postman</span>
-                  </span>
+                <!-- Assistant card (AI assistants: Gemini / ChatGPT / Claude) -->
+                <div
+                  class="about-glass-card skill-card skill-card--stack"
+                  role="group"
+                  aria-labelledby="skill-assistant-title"
+                >
+                  <div class="d-flex flex-column align-items-center">
+                    <h4 id="skill-assistant-title" class="skill-title">
+                      Assistant
+                    </h4>
+                    <div class="skill-tile-grid mt-3 w-100">
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="mdi:robot"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Gemini</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:openai"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">ChatGPT</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:anthropic"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Claude</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <hr class="my-4" />
-                <ul class="service-benefits mt-2">
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Reduce Bounce Rate
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Boost Conversions
-                  </li>
-                  <li>
-                    <span class="check"><span class="iconify" data-icon="mdi:check" data-inline="false"></span></span>
-                    Future-Proof
-                  </li>
-                </ul>
-              </div>
-            </article>
-          </div>
-        </div>
-        <!-- /.row -->
 
-        <!-- CTA below all cards -->
-        <div class="text-center">
-          <a href="#contact" class="btn btn-about-cta px-4 py-2 fw-medium">Let's Work Together →</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="d-flex align-items-center justify-content-center section-full">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-10 col-lg-8">
-            <div class="about-glass-card contact-card position-relative text-center">
-              <h2 class="display-5 mb-3">Contact</h2>
-              <p class="lead mb-3">
-                I'm currently open to new opportunities — say hello.
-              </p>
-
-              <!-- copyable email input (click to copy) -->
-              <div class="d-flex justify-content-center align-items-center mb-3">
-                <input id="contact-email" readonly class="contact-input form-control form-control-lg text-center"
-                  value="reachborinhun369@gmail.com" aria-label="Email address to copy" />
-                <button id="contact-copy" class="btn btn-glass ms-2" type="button" aria-label="Copy email">
-                  Copy
-                </button>
-              </div>
-
-              <!-- social icons under the input -->
-              <div class="contact-social d-flex justify-content-center gap-3 mt-3">
-                <a href="https://github.com/reachBorinhun" class="social-link" aria-label="GitHub" title="GitHub">
-                  <i class="fab fa-github" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/reach-borin-hun/" class="social-link" aria-label="LinkedIn"
-                  title="LinkedIn">
-                  <i class="fab fa-linkedin" aria-hidden="true"></i>
-                </a>
-                <a href="" class="social-link" aria-label="Telegram" title="Telegram">
-                  <i class="fab fa-telegram-plane" aria-hidden="true"></i>
-                </a>
+                <!-- Shopify Themes card (three-tile grid: Liquid, Shopify, storefront basics) -->
+                <div
+                  class="about-glass-card skill-card skill-card--stack"
+                  role="group"
+                  aria-labelledby="skill-shop-title"
+                >
+                  <div class="d-flex flex-column align-items-center">
+                    <h4 id="skill-shop-title" class="skill-title">
+                      Shopify Themes
+                    </h4>
+                    <div class="skill-tile-grid mt-3 w-100">
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="material-icon-theme:liquid"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Liquid</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="logos:shopify"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Shopify</span>
+                      </div>
+                      <div class="skill-tile">
+                        <span
+                          class="iconify"
+                          data-icon="logos:bootstrap"
+                          data-inline="false"
+                        ></span>
+                        <span class="tile-label">Bootstrap</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
+      <section
+        id="services"
+        class="section-full d-flex align-items-center justify-content-center"
+      >
+        <div class="container">
+          <h2 class="display-5 text-center mb-5">Services</h2>
+
+          <!-- 3-column gradient glass cards on md+, stacks to 1 column on mobile -->
+          <div class="row gy-4">
+            <div class="col-12 col-md-4 card-wrap">
+              <article
+                class="gradient-card"
+                role="article"
+                aria-labelledby="svc-web-design"
+              >
+                <div class="card-inner">
+                  <div class="service-head">
+                    <div class="service-icon">🎨</div>
+                    <div>
+                      <h3 id="svc-web-design" class="service-title">
+                        Web Design
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="service-sub">
+                    Figma design &amp; coded mockups
+                  </div>
+
+                  <p class="service-desc">
+                    I design in Figma and build coded HTML/CSS/JS prototypes for
+                    preview and testing.
+                  </p>
+
+                  <div class="education-pills mt-3">
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:figma"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Figma</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:html5"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">HTML5</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:css3"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">CSS3</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:javascript"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">JavaScript</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:bootstrap"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Bootstrap</span>
+                    </span>
+                    <span class="education-pill">
+                      <i
+                        class="education-pill-icon fab fa-vuejs"
+                        aria-hidden="true"
+                      ></i>
+                      <span class="education-pill-label">VUE</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:tailwindcss"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Tailwind</span>
+                    </span>
+                  </div>
+                  <hr class="my-4" />
+                  <ul class="service-benefits mt-2">
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Developer Handoff Ready
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Accessible
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Scalable
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-12 col-md-4 card-wrap">
+              <article
+                class="gradient-card gradient-card--accent"
+                role="article"
+                aria-labelledby="svc-shopify"
+              >
+                <div class="card-inner">
+                  <div class="service-head">
+                    <div class="service-icon" aria-hidden="true">
+                      <span
+                        class="iconify shopify-brand"
+                        data-icon="simple-icons:shopify"
+                        data-inline="false"
+                        style="color: #96bf48"
+                      ></span>
+                    </div>
+                    <div>
+                      <h3 id="svc-shopify" class="service-title">
+                        Shopify Themes
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="service-sub">Custom Shopify themes</div>
+
+                  <p class="service-desc">
+                    Design and build custom, conversion-focused Shopify themes
+                    tailored to your store.
+                  </p>
+
+                  <div class="education-pills mt-3">
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify shopify-brand"
+                          data-icon="simple-icons:shopify"
+                          data-inline="false"
+                          style="color: #96bf48"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Shopify</span>
+                    </span>
+                    <span class="education-pill"
+                      ><span class="education-pill-icon"
+                        ><span
+                          class="iconify"
+                          data-icon="material-icon-theme:liquid"
+                          data-inline="false"
+                        ></span></span
+                      ><span class="education-pill-label">Liquid </span></span
+                    >
+                    <span class="education-pill"
+                      ><span class="education-pill-icon"
+                        ><span
+                          class="iconify"
+                          data-icon="simple-icons:javascript"
+                          data-inline="false"
+                        ></span></span
+                      ><span class="education-pill-label"
+                        >JavaScript</span
+                      ></span
+                    >
+                    <span class="education-pill"
+                      ><span class="education-pill-icon"
+                        ><span
+                          class="iconify"
+                          data-icon="simple-icons:figma"
+                          data-inline="false"
+                        ></span></span
+                      ><span class="education-pill-label">Figma</span></span
+                    >
+                    <span class="education-pill"
+                      ><span class="education-pill-icon"
+                        ><span
+                          class="iconify"
+                          data-icon="simple-icons:html5"
+                          data-inline="false"
+                        ></span></span
+                      ><span class="education-pill-label">HTML5</span></span
+                    >
+                    <span class="education-pill"
+                      ><span class="education-pill-icon"
+                        ><span
+                          class="iconify"
+                          data-icon="simple-icons:bootstrap"
+                          data-inline="false"
+                        ></span></span
+                      ><span class="education-pill-label">Bootstrap</span></span
+                    >
+                  </div>
+                  <hr class="my-4+3" />
+                  <ul class="service-benefits mt-2">
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Mobile-Optimized
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Easy to Maintain
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      SEO-Friendly
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-12 col-md-4 card-wrap">
+              <article
+                class="gradient-card"
+                role="article"
+                aria-labelledby="svc-frontend"
+              >
+                <div class="card-inner">
+                  <div class="service-head">
+                    <div class="service-icon">👨‍💻</div>
+                    <div>
+                      <h3 id="svc-frontend" class="service-title">
+                        Front-End Dev
+                      </h3>
+                      <div class="service-sub">
+                        Front-end &amp; API integration
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="service-desc">
+                    Build responsive front-ends and connect APIs; endpoints
+                    tested with Postman.
+                  </p>
+
+                  <div class="education-pills mt-3">
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:html5"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">HTML5</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:css3"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">CSS3</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:javascript"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">JavaScript</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <i
+                        class="education-pill-icon fab fa-vuejs"
+                        aria-hidden="true"
+                      ></i>
+                      <span class="education-pill-label">VUE</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:tailwindcss"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Tailwind</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:bootstrap"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Bootstrap</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-label">VERCEL</span>
+                    </span>
+
+                    <span class="education-pill">
+                      <span class="education-pill-icon">
+                        <span
+                          class="iconify"
+                          data-icon="simple-icons:postman"
+                          data-inline="false"
+                        ></span>
+                      </span>
+                      <span class="education-pill-label">Postman</span>
+                    </span>
+                  </div>
+                  <hr class="my-4" />
+                  <ul class="service-benefits mt-2">
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Reduce Bounce Rate
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Boost Conversions
+                    </li>
+                    <li>
+                      <span class="check"
+                        ><span
+                          class="iconify"
+                          data-icon="mdi:check"
+                          data-inline="false"
+                        ></span
+                      ></span>
+                      Future-Proof
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </div>
+          <!-- /.row -->
+
+          <!-- CTA below all cards -->
+          <div class="text-center">
+            <a href="#contact" class="btn btn-about-cta px-4 py-2 fw-medium"
+              >Let's Work Together →</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="contact"
+        class="d-flex align-items-center justify-content-center section-full"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+              <div
+                class="about-glass-card contact-card position-relative text-center"
+              >
+                <h2 class="display-5 mb-3">Contact</h2>
+                <p class="lead mb-3">
+                  I'm currently open to new opportunities — say hello.
+                </p>
+
+                <!-- copyable email input (click to copy) -->
+                <div
+                  class="d-flex justify-content-center align-items-center mb-3"
+                >
+                  <input
+                    id="contact-email"
+                    readonly
+                    class="contact-input form-control form-control-lg text-center"
+                    value="reachborinhun369@gmail.com"
+                    aria-label="Email address to copy"
+                  />
+                  <button
+                    id="contact-copy"
+                    class="btn btn-glass ms-2"
+                    type="button"
+                    aria-label="Copy email"
+                  >
+                    Copy
+                  </button>
+                </div>
+
+                <!-- social icons under the input -->
+                <div
+                  class="contact-social d-flex justify-content-center gap-3 mt-3"
+                >
+                  <a
+                    href="https://github.com/reachBorinhun"
+                    class="social-link"
+                    aria-label="GitHub"
+                    title="GitHub"
+                  >
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/reach-borin-hun/"
+                    class="social-link"
+                    aria-label="LinkedIn"
+                    title="LinkedIn"
+                  >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href=""
+                    class="social-link"
+                    aria-label="Telegram"
+                    title="Telegram"
+                  >
+                    <i class="fab fa-telegram-plane" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- toast placed outside contact section so it sits above the page (fixed top-center) -->
+      <div
+        id="contact-toast"
+        class="contact-toast"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        Email copied to clipboard
       </div>
-    </section>
 
-    <!-- toast placed outside contact section so it sits above the page (fixed top-center) -->
-    <div id="contact-toast" class="contact-toast" role="status" aria-live="polite" aria-atomic="true">
-      Email copied to clipboard
-    </div>
-
-    <!-- Telegram lightbox (hidden by default) -->
-    <div id="tele-lightbox" class="tele-lightbox" aria-hidden="true">
-      <div class="tele-backdrop" data-role="backdrop"></div>
-      <div class="tele-wrapper">
-        <img src="./assets/img/tele.png" alt="Telegram" class="tele-image" />
+      <!-- Telegram lightbox (hidden by default) -->
+      <div id="tele-lightbox" class="tele-lightbox" aria-hidden="true">
+        <div class="tele-backdrop" data-role="backdrop"></div>
+        <div class="tele-wrapper">
+          <img src="./assets/img/tele.png" alt="Telegram" class="tele-image" />
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <script src="./assets/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script>
-    // Typed.js animation
-    if (document.querySelector(".auto-type")) {
-      var typed = new Typed(".auto-type", {
-        strings: ["Programmer", "Front-end Dev", "Shopify Designer / Developer"],
-        typeSpeed: 100,
-        backSpeed: 100,
-        loop: true,
-      });
-    }
-  </script>
-  <script>
-    // Contact copy-to-clipboard and toast
-    (function () {
-      var copyBtn = document.getElementById("contact-copy");
-      var emailInput = document.getElementById("contact-email");
-      var toast = document.getElementById("contact-toast");
-      if (!copyBtn || !emailInput || !toast) return;
-
-      function showToast(msg, type) {
-        var message = msg || "Email copied to clipboard";
-        // remove previous type classes
-        toast.classList.remove("error");
-        if (type === "error") toast.classList.add("error");
-        // set inner content: icon + message
-        var iconHtml =
-          type === "error"
-            ? '<span class="toast-icon"><i class="fas fa-circle-exclamation" aria-hidden="true"></i></span>'
-            : '<span class="toast-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>';
-        toast.innerHTML =
-          iconHtml + '<span class="toast-text">' + message + "</span>";
-        toast.classList.add("show");
-        setTimeout(function () {
-          toast.classList.remove("show");
-          // clear error class after hide so next toast can default to success
-          toast.classList.remove("error");
-        }, 2400);
-      }
-
-      copyBtn.addEventListener("click", function () {
-        var value = emailInput.value || emailInput.textContent || "";
-        if (!navigator.clipboard) {
-          // fallback
-          emailInput.select && emailInput.select();
-          try {
-            document.execCommand("copy");
-            showToast("Email copied to clipboard", "success");
-          } catch (e) {
-            showToast("Copy failed — manually select and copy", "error");
-          }
-          return;
-        }
-
-        navigator.clipboard
-          .writeText(value)
-          .then(function () {
-            showToast("Email copied to clipboard", "success");
-          })
-          .catch(function () {
-            showToast("Copy failed — manually select and copy", "error");
-          });
-      });
-
-      // allow clicking the input itself to copy
-      emailInput.addEventListener("click", function () {
-        copyBtn.click();
-      });
-    })();
-  </script>
-  <script>
-    // Copy social links from the home section into the contact section so they stay in sync
-    (function () {
-      var homeLinks = document.querySelectorAll(".social-icons a");
-      var contactLinks = document.querySelectorAll(".contact-social a");
-      if (!homeLinks.length || !contactLinks.length) return;
-
-      // Build a map of aria-label -> href from home links
-      var map = {};
-      homeLinks.forEach(function (a) {
-        var key = (a.getAttribute("aria-label") || "").toLowerCase().trim();
-        if (key) map[key] = a.getAttribute("href") || "";
-      });
-
-      contactLinks.forEach(function (a) {
-        var key = (a.getAttribute("aria-label") || "").toLowerCase().trim();
-        if (key && map.hasOwnProperty(key)) {
-          a.setAttribute("href", map[key]);
-        }
-      });
-    })();
-  </script>
-  <script>
-    // Collapse mobile navbar when a link or navbar CTA is clicked
-    (function () {
-      var collapseEl = document.getElementById("collapsibleNavId");
-      if (!collapseEl || typeof bootstrap === "undefined") return;
-      // Ensure we have a Collapse instance (do not toggle on init)
-      var bsCollapse =
-        bootstrap.Collapse.getInstance(collapseEl) ||
-        new bootstrap.Collapse(collapseEl, { toggle: false });
-
-      function shouldHide() {
-        var toggler = document.querySelector(".navbar-toggler");
-        return toggler && window.getComputedStyle(toggler).display !== "none";
-      }
-
-      var selectors =
-        "#collapsibleNavId .nav-link, #collapsibleNavId .nav-cta-wrap .btn";
-      document.querySelectorAll(selectors).forEach(function (el) {
-        el.addEventListener("click", function () {
-          if (shouldHide()) bsCollapse.hide();
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      // Typed.js animation
+      if (document.querySelector(".auto-type")) {
+        var typed = new Typed(".auto-type", {
+          strings: ["Programmer", "Front-end Dev", "Freelancer"],
+          typeSpeed: 100,
+          backSpeed: 100,
+          loop: true,
         });
-      });
+      }
+    </script>
+    <script>
+      // Contact copy-to-clipboard and toast
+      (function () {
+        var copyBtn = document.getElementById("contact-copy");
+        var emailInput = document.getElementById("contact-email");
+        var toast = document.getElementById("contact-toast");
+        if (!copyBtn || !emailInput || !toast) return;
 
-      // Also close the mobile menu when the user clicks or touches outside the navbar
-      function outsideClickHandler(e) {
-        try {
-          // only act on small / collapsed view (when toggler is visible)
-          if (!shouldHide()) return;
-          // if the collapse is not shown, nothing to do
-          if (!collapseEl.classList.contains("show")) return;
-          var toggler = document.querySelector(".navbar-toggler");
-          // ignore clicks on the collapse itself or the toggler
-          if (
-            collapseEl.contains(e.target) ||
-            (toggler && toggler.contains(e.target))
-          )
+        function showToast(msg, type) {
+          var message = msg || "Email copied to clipboard";
+          // remove previous type classes
+          toast.classList.remove("error");
+          if (type === "error") toast.classList.add("error");
+          // set inner content: icon + message
+          var iconHtml =
+            type === "error"
+              ? '<span class="toast-icon"><i class="fas fa-circle-exclamation" aria-hidden="true"></i></span>'
+              : '<span class="toast-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>';
+          toast.innerHTML =
+            iconHtml + '<span class="toast-text">' + message + "</span>";
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+            // clear error class after hide so next toast can default to success
+            toast.classList.remove("error");
+          }, 2400);
+        }
+
+        copyBtn.addEventListener("click", function () {
+          var value = emailInput.value || emailInput.textContent || "";
+          if (!navigator.clipboard) {
+            // fallback
+            emailInput.select && emailInput.select();
+            try {
+              document.execCommand("copy");
+              showToast("Email copied to clipboard", "success");
+            } catch (e) {
+              showToast("Copy failed — manually select and copy", "error");
+            }
             return;
-          bsCollapse.hide();
-        } catch (err) {
-          // swallow errors in older browsers
+          }
+
+          navigator.clipboard
+            .writeText(value)
+            .then(function () {
+              showToast("Email copied to clipboard", "success");
+            })
+            .catch(function () {
+              showToast("Copy failed — manually select and copy", "error");
+            });
+        });
+
+        // allow clicking the input itself to copy
+        emailInput.addEventListener("click", function () {
+          copyBtn.click();
+        });
+      })();
+    </script>
+    <script>
+      // Copy social links from the home section into the contact section so they stay in sync
+      (function () {
+        var homeLinks = document.querySelectorAll(".social-icons a");
+        var contactLinks = document.querySelectorAll(".contact-social a");
+        if (!homeLinks.length || !contactLinks.length) return;
+
+        // Build a map of aria-label -> href from home links
+        var map = {};
+        homeLinks.forEach(function (a) {
+          var key = (a.getAttribute("aria-label") || "").toLowerCase().trim();
+          if (key) map[key] = a.getAttribute("href") || "";
+        });
+
+        contactLinks.forEach(function (a) {
+          var key = (a.getAttribute("aria-label") || "").toLowerCase().trim();
+          if (key && map.hasOwnProperty(key)) {
+            a.setAttribute("href", map[key]);
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Collapse mobile navbar when a link or navbar CTA is clicked
+      (function () {
+        var collapseEl = document.getElementById("collapsibleNavId");
+        if (!collapseEl || typeof bootstrap === "undefined") return;
+        // Ensure we have a Collapse instance (do not toggle on init)
+        var bsCollapse =
+          bootstrap.Collapse.getInstance(collapseEl) ||
+          new bootstrap.Collapse(collapseEl, { toggle: false });
+
+        function shouldHide() {
+          var toggler = document.querySelector(".navbar-toggler");
+          return toggler && window.getComputedStyle(toggler).display !== "none";
         }
-      }
 
-      document.addEventListener("click", outsideClickHandler, {
-        passive: true,
-      });
-      document.addEventListener("touchstart", outsideClickHandler, {
-        passive: true,
-      });
-    })();
-  </script>
-  <script>
-    // Telegram lightbox: show ./assets/img/tele.png when Telegram social link is clicked
-    (function () {
-      var lightbox = document.getElementById("tele-lightbox");
-      if (!lightbox) return;
-      var backdrop = lightbox.querySelector(".tele-backdrop");
-
-      function openLightbox() {
-        lightbox.classList.add("show");
-        lightbox.setAttribute("aria-hidden", "false");
-        // prevent background scroll while open
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeLightbox() {
-        lightbox.classList.remove("show");
-        lightbox.setAttribute("aria-hidden", "true");
-        document.documentElement.style.overflow = "";
-        document.body.style.overflow = "";
-      }
-
-      // attach to Telegram links in header and contact sections
-      var links = document.querySelectorAll(
-        ".social-icons a, .contact-social a"
-      );
-      links.forEach(function (a) {
-        var label = (
-          a.getAttribute("aria-label") ||
-          a.getAttribute("title") ||
-          ""
-        ).toLowerCase();
-        if (label.indexOf("telegram") !== -1) {
-          a.addEventListener("click", function (ev) {
-            ev.preventDefault();
-            openLightbox();
+        var selectors =
+          "#collapsibleNavId .nav-link, #collapsibleNavId .nav-cta-wrap .btn";
+        document.querySelectorAll(selectors).forEach(function (el) {
+          el.addEventListener("click", function () {
+            if (shouldHide()) bsCollapse.hide();
           });
+        });
+
+        // Also close the mobile menu when the user clicks or touches outside the navbar
+        function outsideClickHandler(e) {
+          try {
+            // only act on small / collapsed view (when toggler is visible)
+            if (!shouldHide()) return;
+            // if the collapse is not shown, nothing to do
+            if (!collapseEl.classList.contains("show")) return;
+            var toggler = document.querySelector(".navbar-toggler");
+            // ignore clicks on the collapse itself or the toggler
+            if (
+              collapseEl.contains(e.target) ||
+              (toggler && toggler.contains(e.target))
+            )
+              return;
+            bsCollapse.hide();
+          } catch (err) {
+            // swallow errors in older browsers
+          }
         }
-      });
 
-      // clicking anywhere on the lightbox (backdrop or image) closes it
-      lightbox.addEventListener("click", function () {
-        closeLightbox();
-      });
+        document.addEventListener("click", outsideClickHandler, {
+          passive: true,
+        });
+        document.addEventListener("touchstart", outsideClickHandler, {
+          passive: true,
+        });
+      })();
+    </script>
+    <script>
+      // Telegram lightbox: show ./assets/img/tele.png when Telegram social link is clicked
+      (function () {
+        var lightbox = document.getElementById("tele-lightbox");
+        if (!lightbox) return;
+        var backdrop = lightbox.querySelector(".tele-backdrop");
 
-      // close with Escape as well
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeLightbox();
-      });
-    })();
-  </script>
-</body>
+        function openLightbox() {
+          lightbox.classList.add("show");
+          lightbox.setAttribute("aria-hidden", "false");
+          // prevent background scroll while open
+          document.documentElement.style.overflow = "hidden";
+          document.body.style.overflow = "hidden";
+        }
 
+        function closeLightbox() {
+          lightbox.classList.remove("show");
+          lightbox.setAttribute("aria-hidden", "true");
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
+        }
+
+        // attach to Telegram links in header and contact sections
+        var links = document.querySelectorAll(
+          ".social-icons a, .contact-social a"
+        );
+        links.forEach(function (a) {
+          var label = (
+            a.getAttribute("aria-label") ||
+            a.getAttribute("title") ||
+            ""
+          ).toLowerCase();
+          if (label.indexOf("telegram") !== -1) {
+            a.addEventListener("click", function (ev) {
+              ev.preventDefault();
+              openLightbox();
+            });
+          }
+        });
+
+        // clicking anywhere on the lightbox (backdrop or image) closes it
+        lightbox.addEventListener("click", function () {
+          closeLightbox();
+        });
+
+        // close with Escape as well
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeLightbox();
+        });
+      })();
+    </script>
+  </body>
 </html>
